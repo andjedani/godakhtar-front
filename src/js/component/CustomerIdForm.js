@@ -22,8 +22,13 @@ class CustomerIdForm extends React.Component {
   handleChange = event => {
     const dataLable = event.target.getAttribute("datalabel");
     const value = event.target.value;
-
-    this.setState({ [dataLable]: value });
+    if (value) {
+      this.setState({ [dataLable]: value });
+    } else {
+      let status = this.state;
+      delete status[dataLable];
+      this.setState(status);
+    }
   };
 
   sendDataToServer = () => {
@@ -31,33 +36,42 @@ class CustomerIdForm extends React.Component {
   };
 
   render() {
+    const process = (Object.keys(this.state).length / formData.length) * 100;
+    let processColor;
+    switch (true) {
+      case process < 30:
+        processColor = "danger";
+        break;
+      case process < 100:
+        processColor = "warning";
+        break;
+      case process >= 100:
+        processColor = "success";
+        break;
+      default:
+        processColor = "success";
+        break;
+    }
+
     return (
       <>
-        <MDBNavbar color="primary-color" dark scrolling fixed="top">
+        <MDBNavbar color="unique-color-dark" dark scrolling fixed="top">
           <MDBNavbarBrand>
             <h1>شناسه مشتری</h1>
           </MDBNavbarBrand>
 
-          <MDBProgress
-            color="success"
-            value={(Object.keys(this.state).length / 36) * 100}
-            className="w-50"
-          />
+          <MDBProgress color={processColor} value={process} className="w-50" />
           <MDBBtn
             color="success"
             size="lg"
-            disabled={Object.keys(this.state).length !== 36}
+            disabled={process !== 100}
             onClick={this.sendDataToServer}
           >
             ثبت مشتری
           </MDBBtn>
         </MDBNavbar>
 
-        <br />
-        <br />
-        <br />
-
-        <MDBContainer fluid className="text-center p-5">
+        <MDBContainer className="text-center p-5 mt-5">
           <MDBRow className="p-1">
             {formData.map(field => {
               let formField = null;
