@@ -14,7 +14,7 @@ import {
 } from "mdbreact";
 
 import { formData } from "./CustomerFormData";
-import md5 from "js-md5";
+import generateHash from "random-hash";
 
 class CustomerIdForm extends React.Component {
   constructor(props) {
@@ -36,7 +36,38 @@ class CustomerIdForm extends React.Component {
   };
 
   sendDataToServer = () => {
-    console.log(this.state);
+    let json = this.state;
+    json["keyPersons"] = [];
+    let keys = Object.keys(this.state);
+
+    for (let i in keys) {
+      if (keys[i].indexOf("layoutData") !== -1) {
+        delete json[keys[i]];
+      }
+    }
+
+    keys = Object.keys(json);
+    let hashlist = [];
+    for (let i in keys) {
+      if (keys[i].indexOf("/") !== -1) {
+        let output = keys[i].split("/");
+        hashlist.push(output[0]);
+      }
+    }
+    hashlist = [...new Set(hashlist)];
+    for (let i in hashlist) {
+      let person = {};
+      for (let j in keys) {
+        if (keys[j].indexOf(hashlist[i]) !== -1) {
+          let output = keys[i].split("/");
+          person[output[1]] = json[keys[i]];
+          delete json[keys[i]];
+        }
+      }
+      json["keyPersons"].push({ ...person });
+    }
+
+    console.log(json);
   };
 
   addArrayForms = field => {
@@ -46,6 +77,8 @@ class CustomerIdForm extends React.Component {
     let forms = [];
 
     const formsRecipe = field.forms;
+    const hash = generateHash();
+
     for (let i = 0; i < formsRecipe.length; i++) {
       forms.push(
         <MDBCol
@@ -57,14 +90,14 @@ class CustomerIdForm extends React.Component {
             type={formsRecipe[i].type}
             label={formsRecipe[i].label}
             className="w-100"
-            datalabel={formsRecipe[i].enLabel}
+            datalabel={hash + "/" + formsRecipe[i].enLabel}
+            onChange={event => this.handleChange(event)}
           />
         </MDBCol>
       );
     }
-    const hash = md5(new Date().toString());
     const nextForms = (
-      <MDBCard className="m-2" key={prevForms.length} labelhash={hash}>
+      <MDBCard className="m-2" key={hash} labelhash={hash}>
         <MDBCardBody>
           <MDBContainer>
             <MDBRow>{forms}</MDBRow>
@@ -76,7 +109,7 @@ class CustomerIdForm extends React.Component {
             color="danger"
             size="sm"
             onClick={() => {
-              const list = this.state[field.enLabel];
+              const list = [...this.state[field.enLabel]];
               let index = -1;
 
               for (let i = 0; i < list.length; i++) {
@@ -84,8 +117,18 @@ class CustomerIdForm extends React.Component {
                   index = i;
                 }
               }
+
               list.splice(index, 1);
-              this.setState({ [field.enLabel]: [...list] });
+
+              let newState = this.state;
+              newState[field.enLabel] = list;
+              let keys = Object.keys(newState);
+              for (let i in keys) {
+                if (keys[i].indexOf(hash) !== -1) {
+                  delete newState[keys[i]];
+                }
+              }
+              this.setState(newState);
             }}
           >
             حذف
@@ -127,7 +170,7 @@ class CustomerIdForm extends React.Component {
           <MDBBtn
             color="success"
             size="lg"
-            disabled={process !== 100}
+            // disabled={process !== 100}
             onClick={this.sendDataToServer}
           >
             ثبت مشتری
@@ -167,7 +210,7 @@ class CustomerIdForm extends React.Component {
                       className="browser-default custom-select w-100"
                       defaultValue={field.values[0].value}
                       datalabel={field.enLabel}
-                      onInput={this.handleChange}
+                      onChange={this.handleChange}
                     >
                       {field.values.map(value => (
                         <option
@@ -193,7 +236,7 @@ class CustomerIdForm extends React.Component {
                       label={field.label}
                       className="w-100"
                       datalabel={field.enLabel}
-                      onInput={this.handleChange}
+                      onChange={this.handleChange}
                     />
                   </MDBCol>
                 );

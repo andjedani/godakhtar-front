@@ -275,7 +275,7 @@ export const formData = [
 
   {
     label: "افزودن فرد کلیدی",
-    enLabel: "keyPersons",
+    enLabel: "layoutData-keyPersons",
     type: "arrayList",
     size: "12",
     forms: [
