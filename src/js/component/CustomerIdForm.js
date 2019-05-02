@@ -7,10 +7,14 @@ import {
   MDBBtn,
   MDBProgress,
   MDBNavbar,
-  MDBNavbarBrand
+  MDBNavbarBrand,
+  MDBCard,
+  MDBCardBody,
+  MDBCardFooter
 } from "mdbreact";
 
 import { formData } from "./CustomerFormData";
+import md5 from "js-md5";
 
 class CustomerIdForm extends React.Component {
   constructor(props) {
@@ -33,6 +37,65 @@ class CustomerIdForm extends React.Component {
 
   sendDataToServer = () => {
     console.log(this.state);
+  };
+
+  addArrayForms = field => {
+    const prevForms = this.state[field.enLabel]
+      ? this.state[field.enLabel]
+      : [];
+    let forms = [];
+
+    const formsRecipe = field.forms;
+    for (let i = 0; i < formsRecipe.length; i++) {
+      forms.push(
+        <MDBCol
+          className="align-self-center"
+          size={formsRecipe[i].size}
+          key={formsRecipe[i].enLabel}
+        >
+          <MDBInput
+            type={formsRecipe[i].type}
+            label={formsRecipe[i].label}
+            className="w-100"
+            datalabel={formsRecipe[i].enLabel}
+          />
+        </MDBCol>
+      );
+    }
+    const hash = md5(new Date().toString());
+    const nextForms = (
+      <MDBCard className="m-2" key={prevForms.length} labelhash={hash}>
+        <MDBCardBody>
+          <MDBContainer>
+            <MDBRow>{forms}</MDBRow>
+          </MDBContainer>
+        </MDBCardBody>
+        <MDBCardFooter className="text-left">
+          <MDBBtn
+            outline
+            color="danger"
+            size="sm"
+            onClick={() => {
+              const list = this.state[field.enLabel];
+              let index = -1;
+
+              for (let i = 0; i < list.length; i++) {
+                if (list[i].props.labelhash === hash) {
+                  index = i;
+                }
+              }
+              list.splice(index, 1);
+              this.setState({ [field.enLabel]: [...list] });
+            }}
+          >
+            حذف
+          </MDBBtn>
+        </MDBCardFooter>
+      </MDBCard>
+    );
+    this.setState({
+      [field.enLabel]: [...prevForms, nextForms]
+    });
   };
 
   render() {
@@ -76,7 +139,24 @@ class CustomerIdForm extends React.Component {
             {formData.map(field => {
               let formField = null;
 
-              if (field.type === "select") {
+              if (field.type === "arrayList") {
+                formField = (
+                  <MDBContainer key={field.enLabel}>
+                    <MDBRow>
+                      <MDBCol className="text-right" size={field.size}>
+                        <MDBBtn
+                          outline
+                          color="primary"
+                          onClick={() => this.addArrayForms(field)}
+                        >
+                          {field.label}
+                        </MDBBtn>
+                      </MDBCol>
+                      {this.state[field.enLabel]}
+                    </MDBRow>
+                  </MDBContainer>
+                );
+              } else if (field.type === "select") {
                 formField = (
                   <MDBCol
                     className="align-self-center"

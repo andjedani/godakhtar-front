@@ -272,6 +272,45 @@ export const formData = [
     type: "email",
     size: "4"
   },
+
+  {
+    label: "افزودن فرد کلیدی",
+    enLabel: "keyPersons",
+    type: "arrayList",
+    size: "12",
+    forms: [
+      {
+        label: "نام",
+        enLabel: "keyPersonName",
+        type: "text",
+        size: "3"
+      },
+      {
+        label: "تلفن دفتر",
+        enLabel: "keyPersonOfficePhone",
+        type: "tel",
+        size: "3"
+      },
+      {
+        label: "تلفن همراه",
+        enLabel: "keyPersonMobilePhone",
+        type: "tel",
+        size: "3"
+      },
+      {
+        label: "ایمیل",
+        enLabel: "keyPersonEmail",
+        type: "email",
+        size: "3"
+      },
+      {
+        label: "توضیحات",
+        enLabel: "keyPersonDescription",
+        type: "text",
+        size: "12"
+      }
+    ]
+  },
   {
     enLabel: "typeOfOrder",
     type: "select",
