@@ -65,7 +65,7 @@ export const formData = [
       { name: "طبقه‌بندی مشتری را مشخص کنید", value: "0", disabled: true },
       { name: "GC", value: "GC", disabled: false },
       { name: "EPC", value: "EPC", disabled: false },
-      { name: "بازرگانی", value: "commerce", disabled: false },
+      { name: "بازرگانی", value: "cfo", disabled: false },
       { name: "بهره‌بردار", value: "beneficiary", disabled: false },
       { name: "فروشگاه", value: "store", disabled: false },
       { name: "سایر", value: "others", disabled: false }
@@ -116,7 +116,7 @@ export const formData = [
     ]
   },
   {
-    enLabel: "history",
+    enLabel: "deal_history",
     type: "select",
     size: "4",
     values: [
@@ -199,57 +199,57 @@ export const formData = [
 
   {
     label: "مدیر بازرگانی",
-    enLabel: "commerceManager",
+    enLabel: "cfoManager",
     type: "text",
     size: "4"
   },
   {
     label: "تلفن دفتر بازرگانی",
-    enLabel: "commerceOfficePhone",
+    enLabel: "cfoOfficePhone",
     type: "tel",
     size: "4"
   },
   {
     label: "ایمیل بازرگانی",
-    enLabel: "commerceEmail",
+    enLabel: "cfoEmail",
     type: "email",
     size: "4"
   },
 
   {
     label: "مدیر تدارکات",
-    enLabel: "supplieManager",
+    enLabel: "logisticsManager",
     type: "text",
     size: "4"
   },
   {
     label: "تلفن دفتر تدارکات",
-    enLabel: "supplieOfficePhone",
+    enLabel: "logisticsOfficePhone",
     type: "tel",
     size: "4"
   },
   {
     label: "ایمیل تدارکات",
-    enLabel: "supplieEmail",
+    enLabel: "logisticsEmail",
     type: "email",
     size: "4"
   },
 
   {
     label: "مدیر تعمیرات",
-    enLabel: "repairManager",
+    enLabel: "maintenanceManager",
     type: "text",
     size: "4"
   },
   {
     label: "تلفن دفتر تعمیرات",
-    enLabel: "repairOfficePhone",
+    enLabel: "maintenanceOfficePhone",
     type: "tel",
     size: "4"
   },
   {
     label: "ایمیل تعمیرات",
-    enLabel: "repairEmail",
+    enLabel: "maintenanceEmail",
     type: "email",
     size: "4"
   },
@@ -312,7 +312,7 @@ export const formData = [
     ]
   },
   {
-    enLabel: "typeOfOrder",
+    enLabel: "deal_type",
     type: "select",
     size: "6",
     values: [
@@ -330,7 +330,7 @@ export const formData = [
   },
   {
     label: "حجم خرید ریالی",
-    enLabel: "valueOfOrder",
+    enLabel: "deal_worth",
     type: "text",
     size: "6"
   },
@@ -348,19 +348,19 @@ export const formData = [
   },
   {
     label: "مکانیسم خرید",
-    enLabel: "orderMechanism",
+    enLabel: "dealMechanism",
     type: "text",
     size: "6"
   },
   {
     label: "توضیحات خرید",
-    enLabel: "orderDesciption",
+    enLabel: "dealDesciption",
     type: "text",
     size: "6"
   },
   {
     label: "سایر توضیحات",
-    enLabel: "otherDescription",
+    enLabel: "deal_comments",
     type: "text",
     size: "12"
   }

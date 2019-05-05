@@ -24,20 +24,31 @@ class CustomerIdForm extends React.Component {
   }
 
   handleChange = event => {
-    const dataLable = event.target.getAttribute("datalabel");
+    const dataLabel = event.target.getAttribute("datalabel");
     const value = event.target.value;
-    if (value) {
-      this.setState({ [dataLable]: value });
-    } else {
-      let status = this.state;
-      delete status[dataLable];
-      this.setState(status);
+    this.setState({ [dataLabel]: value });
+  };
+
+  handleChangeArray = (event, groupName, hash) => {
+    const dataLabel = event.target.getAttribute("datalabel").split("/")[1];
+    const value = event.target.value;
+    const group = this.state[groupName] ? [...this.state[groupName]] : [];
+
+    let obj = { id: hash };
+    for (let i in group) {
+      if (group[i].id && group[i].id === hash) {
+        obj = { ...group[i] };
+        group.splice(i, 1);
+      }
     }
+    obj = { ...obj, ...{ [dataLabel]: value } };
+
+    this.setState({ [groupName]: [...group, obj] });
   };
 
   sendDataToServer = () => {
-    let json = this.state;
-    json["keyPersons"] = [];
+    let json = { ...this.state };
+
     let keys = Object.keys(this.state);
 
     for (let i in keys) {
@@ -46,31 +57,11 @@ class CustomerIdForm extends React.Component {
       }
     }
 
-    keys = Object.keys(json);
-    let hashlist = [];
-    for (let i in keys) {
-      if (keys[i].indexOf("/") !== -1) {
-        let output = keys[i].split("/");
-        hashlist.push(output[0]);
-      }
-    }
-    hashlist = [...new Set(hashlist)];
-    for (let i in hashlist) {
-      let person = {};
-      for (let j in keys) {
-        if (keys[j].indexOf(hashlist[i]) !== -1) {
-          let output = keys[i].split("/");
-          person[output[1]] = json[keys[i]];
-          delete json[keys[i]];
-        }
-      }
-      json["keyPersons"].push({ ...person });
-    }
-
     console.log(json);
   };
 
-  addArrayForms = field => {
+  addArrayForms = (field, groupName) => {
+    console.log(groupName);
     const prevForms = this.state[field.enLabel]
       ? this.state[field.enLabel]
       : [];
@@ -91,7 +82,7 @@ class CustomerIdForm extends React.Component {
             label={formsRecipe[i].label}
             className="w-100"
             datalabel={hash + "/" + formsRecipe[i].enLabel}
-            onChange={event => this.handleChange(event)}
+            onChange={event => this.handleChangeArray(event, groupName, hash)}
           />
         </MDBCol>
       );
@@ -183,6 +174,7 @@ class CustomerIdForm extends React.Component {
               let formField = null;
 
               if (field.type === "arrayList") {
+                const groupName = field.enLabel.split("-")[1];
                 formField = (
                   <MDBContainer key={field.enLabel}>
                     <MDBRow>
@@ -190,7 +182,7 @@ class CustomerIdForm extends React.Component {
                         <MDBBtn
                           outline
                           color="primary"
-                          onClick={() => this.addArrayForms(field)}
+                          onClick={() => this.addArrayForms(field, groupName)}
                         >
                           {field.label}
                         </MDBBtn>
