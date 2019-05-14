@@ -28,6 +28,10 @@ class CustomerIdForm extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.addToRequired();
+  }
+
   handleChange = event => {
     const dataLabel = event.target.getAttribute("datalabel");
     const value = event.target.value;
@@ -67,6 +71,7 @@ class CustomerIdForm extends React.Component {
       }
     }
 
+    console.log(json);
     createCustomer(json);
   };
 
@@ -144,11 +149,12 @@ class CustomerIdForm extends React.Component {
     });
   };
 
-  addToRequired = name => {
-    if (this.state.required.indexOf(name) === -1)
-      this.setState(prevState => ({
-        required: [...prevState.required, name]
-      }));
+  addToRequired = () => {
+    let required = formData
+      .filter(field => field.required)
+      .map(field => field.enLabel);
+
+    this.setState({ required });
   };
 
   submitHandler = event => {
@@ -181,9 +187,6 @@ class CustomerIdForm extends React.Component {
           <MDBContainer className="text-center p-5 mt-5">
             <MDBRow className="p-1">
               {formData.map(field => {
-                if (field.required) {
-                  this.addToRequired(field.enLabel);
-                }
                 let formField = null;
 
                 if (field.type === "arrayList") {
