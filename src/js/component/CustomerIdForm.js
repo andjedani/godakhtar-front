@@ -15,6 +15,7 @@ import {
 
 import { formData } from "./CustomerFormData";
 import generateHash from "random-hash";
+import { createCustomer } from "../network/customer";
 
 class CustomerIdForm extends React.Component {
   constructor(props) {
@@ -57,7 +58,15 @@ class CustomerIdForm extends React.Component {
       }
     }
 
+    if (json["key_persons"])
+      json["key_persons"] = json["key_persons"].map(value =>
+        JSON.stringify(value)
+      );
+
     console.log(json);
+    // send this fucking json to server
+
+    createCustomer(json);
   };
 
   addArrayForms = (field, groupName) => {

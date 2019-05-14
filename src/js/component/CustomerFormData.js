@@ -1,74 +1,74 @@
 export const formData = [
   {
     label: "نام مشتری",
-    enLabel: "customerName",
+    enLabel: "name",
     type: "text",
     size: "3"
   },
   {
     label: "شماره مشتری",
-    enLabel: "customerNumber",
+    enLabel: "customer_no",
     type: "text",
     size: "3"
   },
   {
     label: "کد اقتصادی",
-    enLabel: "financialCode",
+    enLabel: "financial_code",
     type: "text",
     size: "2"
   },
   {
     label: "کد ملی",
-    enLabel: "nationalId",
+    enLabel: "national_id",
     type: "text",
     size: "2"
   },
   {
     label: "شماره ثبت",
-    enLabel: "companyCode",
+    enLabel: "registration_no",
     type: "text",
     size: "2"
   },
 
   {
-    enLabel: "customerPriority",
+    enLabel: "priority",
     type: "select",
     size: "4",
     values: [
       { name: "اولویت مشتری را مشخص کنید", value: "0", disabled: true },
-      { name: "اولویت بالا", value: "high", disabled: false },
-      { name: "اولویت متوسط", value: "normal", disabled: false },
-      { name: "اولویت پایین", value: "low", disabled: false }
+      { name: "اولویت بالا", value: "h", disabled: false },
+      { name: "اولویت متوسط", value: "m", disabled: false },
+      { name: "اولویت پایین", value: "l", disabled: false }
     ]
   },
   {
-    enLabel: "customerSegment",
+    enLabel: "section",
     type: "select",
     size: "4",
     values: [
       { name: "بخش‌بندی مشتری را مشخص کنید", value: "0", disabled: true },
-      { name: "نفت", value: "oil", disabled: false },
-      { name: "گاز", value: "gas", disabled: false },
-      { name: "پتروشیمی", value: "petrochemiscals", disabled: false },
-      { name: "پالایشگاه", value: "refinery", disabled: false },
-      { name: "نیروگاه", value: "powerhouse", disabled: false },
-      { name: "ساختمان", value: "building", disabled: false },
-      { name: "فولاد", value: "steel", disabled: false },
-      { name: "سایر", value: "others", disabled: false }
+      { name: "نفت", value: "o", disabled: false },
+      { name: "گاز", value: "g", disabled: false },
+      { name: "پتروشیمی", value: "p", disabled: false },
+      { name: "پالایشگاه", value: "r", disabled: false },
+      { name: "نیروگاه", value: "e", disabled: false },
+      { name: "ساختمان", value: "c", disabled: false },
+      { name: "فولاد", value: "s", disabled: false },
+      { name: "سایر", value: "h", disabled: false }
     ]
   },
   {
-    enLabel: "customerType",
+    enLabel: "classification",
     type: "select",
     size: "4",
     values: [
       { name: "طبقه‌بندی مشتری را مشخص کنید", value: "0", disabled: true },
-      { name: "GC", value: "GC", disabled: false },
-      { name: "EPC", value: "EPC", disabled: false },
-      { name: "بازرگانی", value: "cfo", disabled: false },
-      { name: "بهره‌بردار", value: "beneficiary", disabled: false },
-      { name: "فروشگاه", value: "store", disabled: false },
-      { name: "سایر", value: "others", disabled: false }
+      { name: "GC", value: "g", disabled: false },
+      { name: "EPC", value: "e", disabled: false },
+      { name: "بازرگانی", value: "f", disabled: false },
+      { name: "بهره‌بردار", value: "o", disabled: false },
+      { name: "فروشگاه", value: "s", disabled: false },
+      { name: "سایر", value: "h", disabled: false }
     ]
   },
   {
@@ -77,10 +77,10 @@ export const formData = [
     size: "4",
     values: [
       { name: "نوع فعالیت را مشخص کنید", value: "0", disabled: true },
-      { name: "بهره‌بردار", value: "beneficiary", disabled: false },
-      { name: "پیمانکاری", value: "contracting", disabled: false },
-      { name: "مشاوره مهندسی", value: "consulting", disabled: false },
-      { name: "سایر", value: "others", disabled: false }
+      { name: "بهره‌بردار", value: "o", disabled: false },
+      { name: "پیمانکاری", value: "c", disabled: false },
+      { name: "مشاوره مهندسی", value: "s", disabled: false },
+      { name: "سایر", value: "h", disabled: false }
     ]
   },
   {
@@ -89,10 +89,10 @@ export const formData = [
     size: "4",
     values: [
       { name: "نوع مالکیت را مشخص کنید", value: "0", disabled: true },
-      { name: "مالکیت خصوصی", value: "private", disabled: false },
-      { name: "مالکیت دولتی", value: "governmental", disabled: false },
-      { name: "مالکیت نیمه‌دولتی", value: "semiGovernmental", disabled: false },
-      { name: "سایر", value: "others", disabled: false }
+      { name: "مالکیت خصوصی", value: "p", disabled: false },
+      { name: "مالکیت دولتی", value: "g", disabled: false },
+      { name: "مالکیت نیمه‌دولتی", value: "s", disabled: false },
+      { name: "سایر", value: "h", disabled: false }
     ]
   },
   {
@@ -108,11 +108,11 @@ export const formData = [
     size: "4",
     values: [
       { name: "نحوه‌ی آشنایی را مشخص کنید", value: "0", disabled: true },
-      { name: "نمایشگاه", value: "exhibition", disabled: false },
-      { name: "سایت", value: "website", disabled: false },
-      { name: "معرفی مشتریان", value: "PR", disabled: false },
-      { name: "وندورلیست", value: "vendorlist", disabled: false },
-      { name: "سایر", value: "others", disabled: false }
+      { name: "نمایشگاه", value: "e", disabled: false },
+      { name: "سایت", value: "w", disabled: false },
+      { name: "معرفی مشتریان", value: "r", disabled: false },
+      { name: "وندورلیست", value: "v", disabled: false },
+      { name: "سایر", value: "h", disabled: false }
     ]
   },
   {
@@ -121,54 +121,54 @@ export const formData = [
     size: "4",
     values: [
       { name: "آیا مشتری سابقه‌ی خرید دارد؟", value: "0", disabled: true },
-      { name: "سابقه‌ی خرید دارد", value: "yes", disabled: false },
-      { name: "سابقه‌ی خرید ندارد", value: "no", disabled: false }
+      { name: "سابقه‌ی خرید دارد", value: "y", disabled: false },
+      { name: "سابقه‌ی خرید ندارد", value: "n", disabled: false }
     ]
   },
   {
-    enLabel: "inquiryHistory",
+    enLabel: "inquiry_history",
     type: "select",
     size: "4",
     values: [
       { name: "آیا مشتری سابقه‌ی استعلام دارد؟", value: "0", disabled: true },
-      { name: "خیر", value: "no", disabled: false },
-      { name: "بله / عدم خرید", value: "yes, accept", disabled: false },
-      { name: "بله / منجر به خرید", value: "yes, reject", disabled: false }
+      { name: "خیر", value: "n", disabled: false },
+      { name: "بله / عدم خرید", value: "r", disabled: false },
+      { name: "بله / منجر به خرید", value: "d", disabled: false }
     ]
   },
   {
     label: "آدرس دفتر",
-    enLabel: "officeAddress",
+    enLabel: "office_address",
     type: "text",
     size: "4"
   },
   {
     label: "آدرس کارخانه",
-    enLabel: "factoryAddress",
+    enLabel: "site_address",
     type: "text",
     size: "4"
   },
   {
     label: "کد پستی",
-    enLabel: "postalCode",
+    enLabel: "postal_code",
     type: "text",
     size: "4"
   },
   {
     label: "تلفن",
-    enLabel: "officePhone",
+    enLabel: "phone",
     type: "tel",
     size: "3"
   },
   {
     label: "فکس",
-    enLabel: "officeFax",
+    enLabel: "fax",
     type: "tel",
     size: "3"
   },
   {
     label: "آدرس ایمیل",
-    enLabel: "companyEmail",
+    enLabel: "email",
     type: "email",
     size: "3"
   },
@@ -186,70 +186,70 @@ export const formData = [
   },
   {
     label: "تلفن دفتر مدیرعامل",
-    enLabel: "ceoOfficePhone",
+    enLabel: "ceo_office",
     type: "tel",
     size: "4"
   },
   {
     label: "تلفن همراه مدیرعامل",
-    enLabel: "ceoCellPhone",
+    enLabel: "ceo_mobile",
     type: "tel",
     size: "4"
   },
 
   {
     label: "مدیر بازرگانی",
-    enLabel: "cfoManager",
+    enLabel: "cfo",
     type: "text",
     size: "4"
   },
   {
     label: "تلفن دفتر بازرگانی",
-    enLabel: "cfoOfficePhone",
+    enLabel: "cfo_office",
     type: "tel",
     size: "4"
   },
   {
     label: "ایمیل بازرگانی",
-    enLabel: "cfoEmail",
+    enLabel: "cfo_email",
     type: "email",
     size: "4"
   },
 
   {
     label: "مدیر تدارکات",
-    enLabel: "logisticsManager",
+    enLabel: "logistic",
     type: "text",
     size: "4"
   },
   {
     label: "تلفن دفتر تدارکات",
-    enLabel: "logisticsOfficePhone",
+    enLabel: "logistic_office",
     type: "tel",
     size: "4"
   },
   {
     label: "ایمیل تدارکات",
-    enLabel: "logisticsEmail",
+    enLabel: "logistic_email",
     type: "email",
     size: "4"
   },
 
   {
     label: "مدیر تعمیرات",
-    enLabel: "maintenanceManager",
+    enLabel: "maintenance",
     type: "text",
     size: "4"
   },
   {
     label: "تلفن دفتر تعمیرات",
-    enLabel: "maintenanceOfficePhone",
+    enLabel: "maintenance_office",
     type: "tel",
     size: "4"
   },
   {
     label: "ایمیل تعمیرات",
-    enLabel: "maintenanceEmail",
+    enLabel: "maintenance_email",
     type: "email",
     size: "4"
   },
@@ -262,50 +262,50 @@ export const formData = [
   },
   {
     label: "تلفن دفتر کارشناس",
-    enLabel: "expertPhone",
+    enLabel: "expert_office",
     type: "tel",
     size: "4"
   },
   {
     label: "ایمیل کارشناس",
-    enLabel: "expertEmail",
+    enLabel: "expert_email",
     type: "email",
     size: "4"
   },
 
   {
     label: "افزودن فرد کلیدی",
-    enLabel: "layoutData-keyPersons",
+    enLabel: "layoutData-key_persons",
     type: "arrayList",
     size: "12",
     forms: [
       {
         label: "نام",
-        enLabel: "keyPersonName",
+        enLabel: "name",
         type: "text",
         size: "3"
       },
       {
         label: "تلفن دفتر",
-        enLabel: "keyPersonOfficePhone",
+        enLabel: "office",
         type: "tel",
         size: "3"
       },
       {
         label: "تلفن همراه",
-        enLabel: "keyPersonMobilePhone",
+        enLabel: "mobile",
         type: "tel",
         size: "3"
       },
       {
         label: "ایمیل",
-        enLabel: "keyPersonEmail",
+        enLabel: "email",
         type: "email",
         size: "3"
       },
       {
         label: "توضیحات",
-        enLabel: "keyPersonDescription",
+        enLabel: "comments",
         type: "text",
         size: "12"
       }
@@ -317,15 +317,15 @@ export const formData = [
     size: "6",
     values: [
       { name: "نوع خرید را مشخص کنید", value: "0", disabled: true },
-      { name: "Gate", value: "Gate", disabled: false },
-      { name: "Globe", value: "Globe", disabled: false },
-      { name: "Check", value: "Check", disabled: false },
-      { name: "Ball", value: "Ball", disabled: false },
-      { name: "Butterfly", value: "Butterfly", disabled: false },
-      { name: "خدمات تعمیر", value: "repairService", disabled: false },
-      { name: "خدمات نگهداری", value: "maintenanceService", disabled: false },
-      { name: "قطعات یدکی", value: "sparePart", disabled: false },
-      { name: "سایر", value: "others", disabled: false }
+      { name: "Gate", value: "t", disabled: false },
+      { name: "Globe", value: "g", disabled: false },
+      { name: "Check", value: "c", disabled: false },
+      { name: "Ball", value: "o", disabled: false },
+      { name: "Butterfly", value: "b", disabled: false },
+      { name: "خدمات تعمیر", value: "r", disabled: false },
+      { name: "خدمات نگهداری", value: "m", disabled: false },
+      { name: "قطعات یدکی", value: "s", disabled: false },
+      { name: "سایر", value: "h", disabled: false }
     ]
   },
   {
@@ -336,31 +336,31 @@ export const formData = [
   },
   {
     label: "آخرین بازدید از سایت مشتری",
-    enLabel: "lastVisitOfCustomerWebsite",
+    enLabel: "last_customer_visit",
     type: "text",
     size: "6"
   },
   {
     label: "آخرین بازدید مشتری از سایت",
-    enLabel: "lastCustomerVisitOfOurWebsite",
+    enLabel: "last_godakhtar_visit",
     type: "text",
     size: "6"
   },
   {
     label: "مکانیسم خرید",
-    enLabel: "dealMechanism",
+    enLabel: "mechanism",
     type: "text",
     size: "6"
   },
   {
     label: "توضیحات خرید",
-    enLabel: "dealDesciption",
+    enLabel: "deal_comments",
     type: "text",
     size: "6"
   },
   {
     label: "سایر توضیحات",
-    enLabel: "deal_comments",
+    enLabel: "comments",
     type: "text",
     size: "12"
   }
