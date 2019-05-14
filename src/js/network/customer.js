@@ -6,7 +6,6 @@ const serviceUrl = baseUrl + "customers/";
 export const readCustomer = () => {};
 
 export const createCustomer = json => {
-  console.log(json);
   axios
     .post(serviceUrl, json)
     .then(function(response) {

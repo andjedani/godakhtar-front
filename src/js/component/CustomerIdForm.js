@@ -5,9 +5,6 @@ import {
   MDBInput,
   MDBCol,
   MDBBtn,
-  MDBProgress,
-  MDBNavbar,
-  MDBNavbarBrand,
   MDBCard,
   MDBCardBody,
   MDBCardFooter
@@ -16,24 +13,34 @@ import {
 import { formData } from "./CustomerFormData";
 import generateHash from "random-hash";
 import { createCustomer } from "../network/customer";
+import { copyObject } from "../utility";
+import { FormHeader } from "./FormHeader";
+
+const formName = "شناسه مشتری";
 
 class CustomerIdForm extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      required: [],
+      formData: {}
+    };
   }
 
   handleChange = event => {
     const dataLabel = event.target.getAttribute("datalabel");
     const value = event.target.value;
-    this.setState({ [dataLabel]: value });
+    this.setState(prevState => ({
+      formData: { ...prevState.formData, [dataLabel]: value }
+    }));
   };
 
   handleChangeArray = (event, groupName, hash) => {
     const dataLabel = event.target.getAttribute("datalabel").split("/")[1];
     const value = event.target.value;
-    const group = this.state[groupName] ? [...this.state[groupName]] : [];
+    let group = copyObject(this.state.formData[groupName]);
+    group = group ? group : [];
 
     let obj = { id: hash };
     for (let i in group) {
@@ -44,33 +51,26 @@ class CustomerIdForm extends React.Component {
     }
     obj = { ...obj, ...{ [dataLabel]: value } };
 
-    this.setState({ [groupName]: [...group, obj] });
+    this.setState(prevState => ({
+      formData: { ...prevState.formData, [groupName]: [...group, obj] }
+    }));
   };
 
   sendDataToServer = () => {
-    let json = { ...this.state };
+    let json = copyObject(this.state.formData);
+    const keys = Object.keys(json);
 
-    let keys = Object.keys(this.state);
-
-    for (let i in keys) {
-      if (keys[i].indexOf("layoutData") !== -1) {
-        delete json[keys[i]];
+    for (let index in keys) {
+      const key = keys[index];
+      if (typeof json[key] === typeof []) {
+        json[key] = json[key].map(value => JSON.stringify(value));
       }
     }
-
-    if (json["key_persons"])
-      json["key_persons"] = json["key_persons"].map(value =>
-        JSON.stringify(value)
-      );
-
-    console.log(json);
-    // send this fucking json to server
 
     createCustomer(json);
   };
 
-  addArrayForms = (field, groupName) => {
-    console.log(groupName);
+  addArrayForms = field => {
     const prevForms = this.state[field.enLabel]
       ? this.state[field.enLabel]
       : [];
@@ -91,11 +91,14 @@ class CustomerIdForm extends React.Component {
             label={formsRecipe[i].label}
             className="w-100"
             datalabel={hash + "/" + formsRecipe[i].enLabel}
-            onChange={event => this.handleChangeArray(event, groupName, hash)}
+            onChange={event =>
+              this.handleChangeArray(event, field.enLabel, hash)
+            }
           />
         </MDBCol>
       );
     }
+
     const nextForms = (
       <MDBCard className="m-2" key={hash} labelhash={hash}>
         <MDBCardBody>
@@ -141,112 +144,123 @@ class CustomerIdForm extends React.Component {
     });
   };
 
-  render() {
-    const process = (Object.keys(this.state).length / formData.length) * 100;
-    let processColor;
-    switch (true) {
-      case process < 30:
-        processColor = "danger";
-        break;
-      case process < 100:
-        processColor = "warning";
-        break;
-      case process >= 100:
-        processColor = "success";
-        break;
-      default:
-        processColor = "success";
-        break;
+  addToRequired = name => {
+    if (this.state.required.indexOf(name) === -1)
+      this.setState(prevState => ({
+        required: [...prevState.required, name]
+      }));
+  };
+
+  submitHandler = event => {
+    event.preventDefault();
+    if (event.target.className.indexOf("was-validated") === -1)
+      event.target.className += " was-validated";
+
+    for (let index in this.state.required) {
+      const key = this.state.required[index];
+      if (!this.state.formData[key]) return;
     }
 
+    this.sendDataToServer();
+  };
+
+  render() {
     return (
       <>
-        <MDBNavbar color="unique-color-dark" dark scrolling fixed="top">
-          <MDBNavbarBrand>
-            <h1>شناسه مشتری</h1>
-          </MDBNavbarBrand>
+        <FormHeader
+          formName={formName}
+          allFields={formData.length}
+          completedFields={Object.keys(this.state.formData).length}
+        />
 
-          <MDBProgress color={processColor} value={process} className="w-50" />
-          <MDBBtn
-            color="success"
-            size="lg"
-            // disabled={process !== 100}
-            onClick={this.sendDataToServer}
-          >
-            ثبت مشتری
-          </MDBBtn>
-        </MDBNavbar>
+        <form
+          className="needs-validation"
+          onSubmit={this.submitHandler}
+          noValidate
+        >
+          <MDBContainer className="text-center p-5 mt-5">
+            <MDBRow className="p-1">
+              {formData.map(field => {
+                if (field.required) {
+                  this.addToRequired(field.enLabel);
+                }
+                let formField = null;
 
-        <MDBContainer className="text-center p-5 mt-5">
-          <MDBRow className="p-1">
-            {formData.map(field => {
-              let formField = null;
-
-              if (field.type === "arrayList") {
-                const groupName = field.enLabel.split("-")[1];
-                formField = (
-                  <MDBContainer key={field.enLabel}>
-                    <MDBRow>
-                      <MDBCol className="text-right" size={field.size}>
-                        <MDBBtn
-                          outline
-                          color="primary"
-                          onClick={() => this.addArrayForms(field, groupName)}
-                        >
-                          {field.label}
-                        </MDBBtn>
-                      </MDBCol>
-                      {this.state[field.enLabel]}
-                    </MDBRow>
-                  </MDBContainer>
-                );
-              } else if (field.type === "select") {
-                formField = (
-                  <MDBCol
-                    className="align-self-center"
-                    size={field.size}
-                    key={field.enLabel}
-                  >
-                    <select
-                      className="browser-default custom-select w-100"
-                      defaultValue={field.values[0].value}
-                      datalabel={field.enLabel}
-                      onChange={this.handleChange}
+                if (field.type === "arrayList") {
+                  formField = (
+                    <MDBContainer key={field.enLabel}>
+                      <MDBRow>
+                        <MDBCol className="text-right" size={field.size}>
+                          <MDBBtn
+                            outline
+                            color="primary"
+                            onClick={() => this.addArrayForms(field)}
+                          >
+                            {field.label}
+                          </MDBBtn>
+                        </MDBCol>
+                        {this.state[field.enLabel]}
+                      </MDBRow>
+                    </MDBContainer>
+                  );
+                } else if (field.type === "select") {
+                  formField = (
+                    <MDBCol
+                      className="align-self-center"
+                      size={field.size}
+                      key={field.enLabel}
                     >
-                      {field.values.map(value => (
-                        <option
-                          disabled={value.disabled}
-                          value={value.value}
-                          key={value.value}
-                        >
-                          {value.name}
-                        </option>
-                      ))}
-                    </select>
-                  </MDBCol>
-                );
-              } else {
-                formField = (
-                  <MDBCol
-                    className="align-self-center"
-                    size={field.size}
-                    key={field.enLabel}
-                  >
-                    <MDBInput
-                      type={field.type}
-                      label={field.label}
-                      className="w-100"
-                      datalabel={field.enLabel}
-                      onChange={this.handleChange}
-                    />
-                  </MDBCol>
-                );
-              }
+                      <select
+                        className="browser-default custom-select w-100"
+                        defaultValue={field.values[0].value}
+                        datalabel={field.enLabel}
+                        onChange={this.handleChange}
+                      >
+                        {field.values.map(value => (
+                          <option
+                            disabled={value.disabled}
+                            value={value.value}
+                            key={value.value}
+                          >
+                            {value.name}
+                          </option>
+                        ))}
+                      </select>
+                    </MDBCol>
+                  );
+                } else {
+                  formField = (
+                    <MDBCol
+                      className="align-self-center"
+                      size={field.size}
+                      key={field.enLabel}
+                    >
+                      <MDBInput
+                        type={field.type}
+                        label={field.label}
+                        className="w-100"
+                        datalabel={field.enLabel}
+                        onChange={this.handleChange}
+                        required={field.required}
+                      >
+                        <div className="invalid-feedback">
+                          این قسمت باید کامل شود
+                        </div>
+                      </MDBInput>
+                    </MDBCol>
+                  );
+                }
 
-              return formField;
-            })}
-          </MDBRow>
-        </MDBContainer>
+                return formField;
+              })}
+            </MDBRow>
+            <MDBRow>
+              <MDBBtn color="success" size="lg" type="submit">
+                ثبت مشتری
+              </MDBBtn>
+            </MDBRow>
+          </MDBContainer>
+        </form>
       </>
     );
   }

@@ -18,3 +18,10 @@ code {
   right: 0;
   left: unset;
 }
+
+.md-form .form-control.is-invalid,
+.was-validated .md-form .form-control:invalid,
+.form-control.is-valid,
+.was-validated .form-control:valid {
+  background-position: center left calc(0.375em + 0.1875rem);
+}

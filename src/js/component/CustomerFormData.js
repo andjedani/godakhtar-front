@@ -3,13 +3,15 @@ export const formData = [
     label: "نام مشتری",
     enLabel: "name",
     type: "text",
-    size: "3"
+    size: "3",
+    required: true
   },
   {
     label: "شماره مشتری",
     enLabel: "customer_no",
     type: "text",
-    size: "3"
+    size: "3",
+    required: true
   },
   {
     label: "کد اقتصادی",
@@ -275,7 +277,7 @@ export const formData = [
 
   {
     label: "افزودن فرد کلیدی",
-    enLabel: "layoutData-key_persons",
+    enLabel: "key_persons",
     type: "arrayList",
     size: "12",
     forms: [
