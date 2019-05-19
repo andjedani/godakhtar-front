@@ -1,9 +1,11 @@
 import React from "react";
-import CustomerIdForm from "./CustomerIdForm";
+// import CustomerIdForm from "./CustomerIdForm";
+import ProductForm from "./ProductForm";
 
 class App extends React.Component {
   render() {
-    return <CustomerIdForm />;
+    // return <CustomerIdForm />;
+    return <ProductForm />;
   }
 }
 
