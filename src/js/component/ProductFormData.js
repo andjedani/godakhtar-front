@@ -1,5 +1,66 @@
 export const formData = [
   {
+    label: "نوع شیر",
+    enLabel: "valveType",
+    type: "select",
+    size: "4",
+    values: [
+      { name: "نوع شیر", value: "0", disabled: true },
+      { name: "Ball Valve", value: "Ball Valve", disabled: false },
+      {
+        name: "Bellowse Gate Valve",
+        value: "Bellowse Gate Valve",
+        disabled: false
+      },
+      {
+        name: "Bellowse Globe Valve",
+        value: "Bellowse Globe Valve",
+        disabled: false
+      },
+      { name: "Butterfly valve", value: "Butterfly valve", disabled: false },
+      { name: "Check Valve", value: "Check Valve", disabled: false },
+      {
+        name: "Cryogenic Ball Valve",
+        value: "Cryogenic Ball Valve",
+        disabled: false
+      },
+      {
+        name: "Cryogenic Butterfly Valve",
+        value: "Cryogenic Butterfly Valve",
+        disabled: false
+      },
+      {
+        name: "Cryogenic Butterfly Valve",
+        value: "Cryogenic Butterfly Valve",
+        disabled: false
+      },
+      {
+        name: "Cryogenic Check Valve",
+        value: "Cryogenic Check Valve",
+        disabled: false
+      },
+      {
+        name: "Cryogenic Gate Valve",
+        value: "Cryogenic Gate Valve",
+        disabled: false
+      },
+      {
+        name: "Cryogenic Globe Valve",
+        value: "Cryogenic Globe Valve",
+        disabled: false
+      },
+      { name: "Gate Valve", value: "Gate Valve", disabled: false },
+      { name: "Globe", value: "Globe", disabled: false },
+      { name: "Knife Gate Valve", value: "Knife Gate Valve", disabled: false },
+      { name: "Plug Valve", value: "Plug Valve", disabled: false },
+      {
+        name: "Through Conduit Gate Valve",
+        value: "Through Conduit Gate Valve",
+        disabled: false
+      }
+    ]
+  },
+  {
     label: "اندازه",
     enLabel: "size",
     type: "select",
@@ -133,6 +194,7 @@ export const formData = [
     enLabel: "connection",
     type: "select",
     size: "4",
+    required: true,
     values: [
       { name: "اتصال", value: "0", disabled: true },
       { name: "Flange / RF", value: "Flange / RF", disabled: false },
@@ -165,6 +227,7 @@ export const formData = [
     enLabel: "bodyMaterial",
     type: "select",
     size: "4",
+    required: true,
     values: [
       { name: "جنس بدنه", value: "0", disabled: true },
       { name: "WCB", value: "WCB", disabled: false },
@@ -199,6 +262,7 @@ export const formData = [
     enLabel: "trimMaterial",
     type: "select",
     size: "4",
+    required: true,
     values: [
       { name: "جنس تریم", value: "0", disabled: true },
       { name: "WCB + ENP", value: "WCB + ENP", disabled: false },
@@ -314,6 +378,7 @@ export const formData = [
     enLabel: "operation",
     type: "select",
     size: "4",
+    required: true,
     values: [
       { name: "عملیات", value: "0", disabled: true },
       { name: "Gear Operated", value: "Gear Operated", disabled: false },

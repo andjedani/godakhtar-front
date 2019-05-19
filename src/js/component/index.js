@@ -7,3 +7,5 @@ export * from "./ProductFormData";
 export * from "./ProductForm";
 
 export * from "./FormHeader";
+
+export * from "./FormGenerator";
