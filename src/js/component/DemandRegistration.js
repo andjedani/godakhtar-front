@@ -7,12 +7,16 @@ const Panel = Collapse.Panel;
 
 class DemandRegistration extends React.Component {
   static displayName = "ثبت تقاضا";
-  state = { data: [] };
+  state = { data: [], initloading: true };
 
   getData = async () => {
-    const data = (await readCustomer()).data;
+    this.setState({ initloading: true });
+    let data = await readCustomer();
+    if (data) data = data.data;
+    else data = [];
+
     console.log(data);
-    this.setState({ data });
+    this.setState({ data, initloading: false });
   };
 
   componentWillMount = () => {
@@ -42,6 +46,7 @@ class DemandRegistration extends React.Component {
                 },
                 pageSize: 10
               }}
+              loading={this.state.initloading}
               bordered
               dataSource={this.state.data}
               renderItem={item => (
