@@ -27,6 +27,17 @@ body {
   background-color: #fff;
   align-items: center;
   text-align: center;
+  background-image: url("./static/img/logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: fixed;
+  height: 70px;
+  top: 0;
+  right: 0;
+  left: 0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  z-index: 10;
 }
 
 .ant-layout-sider {
@@ -35,6 +46,8 @@ body {
   width: unset !important;
   max-width: unset !important;
   flex: unset !important;
+  height: 100%;
+  margin-top: 70px;
 }
 
 .ant-steps-vertical .ant-steps-item {
@@ -45,4 +58,17 @@ body {
   background-color: #fff;
   align-items: center;
   text-align: center;
+  position: fixed;
+  height: 70px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  z-index: 10;
+}
+
+.ant-layout-content {
+  padding-top: 70px;
+  padding-bottom: 70px;
+  min-height: 90vh;
 }

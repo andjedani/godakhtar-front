@@ -1,5 +1,6 @@
 import React from "react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { Steps, Layout } from "antd";
 
 const { Step } = Steps;
@@ -17,10 +18,20 @@ class ProcessForm extends React.Component {
 
   render() {
     const { current } = this.state;
+    const element = (
+      <FontAwesomeIcon
+        icon={faCoffee}
+        style={{
+          marginLeft: "5px",
+          marginRight: "5px",
+          color: "#279faf"
+        }}
+      />
+    );
 
     return (
       <Layout>
-        <Header className="main-color-item palette-volcano-10">Header</Header>
+        <Header className="main-color-item palette-volcano-10" />
         <Layout style={{ padding: "50px" }}>
           <Sider style={{ padding: "50px" }}>
             <Steps
@@ -36,10 +47,15 @@ class ProcessForm extends React.Component {
             </Steps>
           </Sider>
           <Content style={{ paddingRight: "50px" }}>
-            <Layout style={{ backgroundColor: "#fff" }}>{current}</Layout>
+            <Layout style={{ backgroundColor: "#fff", height: "100%" }}>
+              {current}
+            </Layout>
           </Content>
         </Layout>
-        <Footer>Footer</Footer>
+        <Footer>
+          طراحی و توسعه با {element}
+          در گراف
+        </Footer>
       </Layout>
     );
   }
