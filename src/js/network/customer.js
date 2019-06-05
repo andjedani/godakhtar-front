@@ -1,18 +1,22 @@
-import { baseUrl } from "../network";
+import { baseUrl, api } from "../network";
 import axios from "axios";
 
-const serviceUrl = baseUrl + "customers/";
+const serviceUrl = baseUrl + api + "customers/";
 
-export const readCustomer = () => {};
+export const readCustomer = () => {
+  return axios.get(serviceUrl).catch(function(error) {
+    console.log(error);
+  });
+};
 
 export const createCustomer = json => {
   axios
     .post(serviceUrl, json)
     .then(function(response) {
-      console.log(response);
+      return response;
     })
     .catch(function(error) {
-      console.log(error);
+      console.error(error);
     });
 };
 

@@ -1,1 +1,3 @@
-export const baseUrl = "http://api.cuterhino.com/api/v0/";
+export const baseUrl = "http://cuterhino.com/";
+export const dashboardUrl = baseUrl + "beta-version/";
+export const api = "api/v0/";

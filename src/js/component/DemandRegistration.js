@@ -1,18 +1,23 @@
 import React from "react";
 import { Layout, Collapse, Icon, List } from "antd";
+import { readCustomer } from "../network/customer";
+import { dashboardUrl } from "../network";
 
 const Panel = Collapse.Panel;
 
-const data = [
-  "Racing car sprays burning fuel into crowd.",
-  "Japanese princess to wed commoner.",
-  "Australian walks 100km after outback crash.",
-  "Man charged over missing wedding girl.",
-  "Los Angeles battles huge wildfires."
-];
-
 class DemandRegistration extends React.Component {
   static displayName = "ثبت تقاضا";
+  state = { data: [] };
+
+  getData = async () => {
+    const data = (await readCustomer()).data;
+    console.log(data);
+    this.setState({ data });
+  };
+
+  componentWillMount = () => {
+    this.getData();
+  };
 
   render() {
     return (
@@ -38,12 +43,12 @@ class DemandRegistration extends React.Component {
                 pageSize: 10
               }}
               bordered
-              dataSource={data}
+              dataSource={this.state.data}
               renderItem={item => (
                 <List.Item
                   actions={[
                     <a
-                      href="http://cuterhino.com/beta-version/customers/customer/5/"
+                      href={dashboardUrl + "customers/customer/" + item.id}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -51,7 +56,7 @@ class DemandRegistration extends React.Component {
                     </a>
                   ]}
                 >
-                  {item}
+                  {item.name}
                 </List.Item>
               )}
             />
