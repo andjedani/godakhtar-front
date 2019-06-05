@@ -9,3 +9,5 @@ export * from "./ProductForm";
 export * from "./FormHeader";
 
 export * from "./FormGenerator";
+
+export * from "./ProductForm";

@@ -1,3 +1,5 @@
+@import "~antd/dist/antd.css";
+
 body {
   direction: rtl;
   margin: 0;
@@ -9,19 +11,38 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
-.md-form label {
-  right: 0;
+.ant-steps-vertical > .ant-steps-item > .ant-steps-item-tail {
   left: unset;
+  right: 20px;
+  top: 5px;
 }
 
-.md-form .form-control.is-invalid,
-.was-validated .md-form .form-control:invalid,
-.form-control.is-valid,
-.was-validated .form-control:valid {
-  background-position: center left calc(0.375em + 0.1875rem);
+.ant-steps-vertical .ant-steps-item-icon {
+  float: right;
+  margin-right: unset;
+  margin-left: 16px;
+}
+
+.ant-layout-header {
+  background-color: #fff;
+  align-items: center;
+  text-align: center;
+}
+
+.ant-layout-sider {
+  background-color: #fff;
+  padding: 10px;
+  width: unset !important;
+  max-width: unset !important;
+  flex: unset !important;
+}
+
+.ant-steps-vertical .ant-steps-item {
+  padding: 5px;
+}
+
+.ant-layout-footer {
+  background-color: #fff;
+  align-items: center;
+  text-align: center;
 }

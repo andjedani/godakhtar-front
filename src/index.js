@@ -1,14 +1,18 @@
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "bootstrap-css-only/css/bootstrap.min.css";
-import "mdbreact/dist/css/mdb.css";
-
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./js/component/App";
 import * as serviceWorker from "./serviceWorker";
+import { LocaleProvider } from "antd";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+import { faIR } from "antd/lib/locale-provider/fa_IR";
+
+ReactDOM.render(
+  <LocaleProvider locale={faIR}>
+    <App />
+  </LocaleProvider>,
+  document.getElementById("root")
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

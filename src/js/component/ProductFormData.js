@@ -3,7 +3,7 @@ export const formData = [
     label: "نوع شیر",
     enLabel: "valveType",
     type: "select",
-    size: "4",
+    size: 4,
     values: [
       { name: "نوع شیر", value: "0", disabled: true },
       { name: "Ball Valve", value: "Ball Valve", disabled: false },
@@ -30,11 +30,6 @@ export const formData = [
         disabled: false
       },
       {
-        name: "Cryogenic Butterfly Valve",
-        value: "Cryogenic Butterfly Valve",
-        disabled: false
-      },
-      {
         name: "Cryogenic Check Valve",
         value: "Cryogenic Check Valve",
         disabled: false
@@ -42,11 +37,6 @@ export const formData = [
       {
         name: "Cryogenic Gate Valve",
         value: "Cryogenic Gate Valve",
-        disabled: false
-      },
-      {
-        name: "Cryogenic Globe Valve",
-        value: "Cryogenic Globe Valve",
         disabled: false
       },
       { name: "Gate Valve", value: "Gate Valve", disabled: false },
@@ -64,7 +54,7 @@ export const formData = [
     label: "اندازه",
     enLabel: "size",
     type: "select",
-    size: "4",
+    size: 4,
     required: true,
     values: [
       { name: "اندازه", value: "0", disabled: true },
@@ -164,7 +154,7 @@ export const formData = [
     label: "کلاس",
     enLabel: "class",
     type: "select",
-    size: "4",
+    size: 4,
     required: true,
     values: [
       { name: "کلاس", value: "0", disabled: true },
@@ -193,7 +183,7 @@ export const formData = [
     label: "اتصال",
     enLabel: "connection",
     type: "select",
-    size: "4",
+    size: 4,
     required: true,
     values: [
       { name: "اتصال", value: "0", disabled: true },
@@ -226,7 +216,7 @@ export const formData = [
     label: "جنس بدنه",
     enLabel: "bodyMaterial",
     type: "select",
-    size: "4",
+    size: 4,
     required: true,
     values: [
       { name: "جنس بدنه", value: "0", disabled: true },
@@ -261,7 +251,7 @@ export const formData = [
     label: "جنس تریم",
     enLabel: "trimMaterial",
     type: "select",
-    size: "4",
+    size: 4,
     required: true,
     values: [
       { name: "جنس تریم", value: "0", disabled: true },
@@ -377,7 +367,7 @@ export const formData = [
     label: "عملیات",
     enLabel: "operation",
     type: "select",
-    size: "4",
+    size: 4,
     required: true,
     values: [
       { name: "عملیات", value: "0", disabled: true },

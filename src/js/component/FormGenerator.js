@@ -1,18 +1,9 @@
 import React from "react";
-import {
-  MDBContainer,
-  MDBRow,
-  MDBInput,
-  MDBCol,
-  MDBBtn,
-  MDBCard,
-  MDBCardBody,
-  MDBCardFooter
-} from "mdbreact";
 
 import generateHash from "random-hash";
 import { copyObject } from "../utility";
 import { FormHeader } from "./FormHeader";
+import { Col, Row, Input, Button, Card, Layout } from "antd";
 
 class FormGenerator extends React.Component {
   constructor(props) {
@@ -67,63 +58,52 @@ class FormGenerator extends React.Component {
 
     for (let i = 0; i < formsRecipe.length; i++) {
       forms.push(
-        <MDBCol
-          className="align-self-center"
-          size={formsRecipe[i].size}
-          key={formsRecipe[i].enLabel}
-        >
-          <MDBInput
+        <Col span={formsRecipe[i].size} key={formsRecipe[i].enLabel}>
+          <Input
             type={formsRecipe[i].type}
-            label={formsRecipe[i].label}
-            className="w-100"
+            addonBefore={formsRecipe[i].label}
             datalabel={hash + "/" + formsRecipe[i].enLabel}
             onChange={event =>
               this.handleChangeArray(event, field.enLabel, hash)
             }
           />
-        </MDBCol>
+        </Col>
       );
     }
 
     const nextForms = (
-      <MDBCard className="m-2" key={hash} labelhash={hash}>
-        <MDBCardBody>
-          <MDBContainer>
-            <MDBRow>{forms}</MDBRow>
-          </MDBContainer>
-        </MDBCardBody>
-        <MDBCardFooter className="text-left">
-          <MDBBtn
-            outline
-            color="danger"
-            size="sm"
-            onClick={() => {
-              const list = [...this.state[field.enLabel]];
-              let index = -1;
+      <Card key={hash} labelhash={hash}>
+        <Row justify="center">{forms}</Row>
 
-              for (let i = 0; i < list.length; i++) {
-                if (list[i].props.labelhash === hash) {
-                  index = i;
-                }
+        <Button
+          color="danger"
+          size="sm"
+          onClick={() => {
+            const list = [...this.state[field.enLabel]];
+            let index = -1;
+
+            for (let i = 0; i < list.length; i++) {
+              if (list[i].props.labelhash === hash) {
+                index = i;
               }
+            }
 
-              list.splice(index, 1);
+            list.splice(index, 1);
 
-              let newState = this.state;
-              newState[field.enLabel] = list;
-              let keys = Object.keys(newState);
-              for (let i in keys) {
-                if (keys[i].indexOf(hash) !== -1) {
-                  delete newState[keys[i]];
-                }
+            let newState = this.state;
+            newState[field.enLabel] = list;
+            let keys = Object.keys(newState);
+            for (let i in keys) {
+              if (keys[i].indexOf(hash) !== -1) {
+                delete newState[keys[i]];
               }
-              this.setState(newState);
-            }}
-          >
-            حذف
-          </MDBBtn>
-        </MDBCardFooter>
-      </MDBCard>
+            }
+            this.setState(newState);
+          }}
+        >
+          حذف
+        </Button>
+      </Card>
     );
     this.setState({
       [field.enLabel]: [...prevForms, nextForms]
@@ -153,49 +133,39 @@ class FormGenerator extends React.Component {
 
   render() {
     return (
-      <>
+      <Layout>
         <FormHeader
           formName={this.props.formName}
           allFields={this.props.formData.length}
           completedFields={Object.keys(this.state.formData).length}
         />
 
-        <form
-          className="needs-validation"
-          onSubmit={this.submitHandler}
-          noValidate
-        >
-          <MDBContainer className="text-center p-5 mt-5">
-            <MDBRow className="p-1">
+        <form onSubmit={this.submitHandler} noValidate>
+          <div>
+            <Row justify="center">
               {this.props.formData.map(field => {
                 let formField = null;
 
                 if (field.type === "arrayList") {
                   formField = (
-                    <MDBContainer key={field.enLabel}>
-                      <MDBRow>
-                        <MDBCol className="text-right" size={field.size}>
-                          <MDBBtn
-                            outline
-                            color="primary"
-                            onClick={() => this.addArrayForms(field)}
-                          >
-                            {field.label}
-                          </MDBBtn>
-                        </MDBCol>
-                        {this.state[field.enLabel]}
-                      </MDBRow>
-                    </MDBContainer>
+                    // <Layout>
+                    <Row justify="center" key={field.enLabel}>
+                      <Col span={field.size}>
+                        <Button
+                          color="primary"
+                          onClick={() => this.addArrayForms(field)}
+                        >
+                          {field.label}
+                        </Button>
+                      </Col>
+                      {this.state[field.enLabel]}
+                    </Row>
+                    // </Layout>
                   );
                 } else if (field.type === "select") {
                   formField = (
-                    <MDBCol
-                      className="align-self-center"
-                      size={field.size}
-                      key={field.enLabel}
-                    >
+                    <Col span={field.size} key={field.enLabel}>
                       <select
-                        className="browser-default custom-select w-100"
                         defaultValue={field.values[0].value}
                         datalabel={field.enLabel}
                         onChange={this.handleChange}
@@ -210,42 +180,33 @@ class FormGenerator extends React.Component {
                           </option>
                         ))}
                       </select>
-                    </MDBCol>
+                    </Col>
                   );
                 } else {
                   formField = (
-                    <MDBCol
-                      className="align-self-center"
-                      size={field.size}
-                      key={field.enLabel}
-                    >
-                      <MDBInput
+                    <Col span={field.size} key={field.enLabel}>
+                      <Input
                         type={field.type}
-                        label={field.label}
-                        className="w-100"
+                        addonBefore={field.label}
                         datalabel={field.enLabel}
                         onChange={this.handleChange}
                         required={field.required}
-                      >
-                        <div className="invalid-feedback">
-                          این قسمت باید کامل شود
-                        </div>
-                      </MDBInput>
-                    </MDBCol>
+                      />
+                    </Col>
                   );
                 }
 
                 return formField;
               })}
-            </MDBRow>
-            <MDBRow>
-              <MDBBtn color="success" size="lg" type="submit">
+            </Row>
+            <Row justify="center">
+              <Button color="success" type="submit">
                 ثبت مشتری
-              </MDBBtn>
-            </MDBRow>
-          </MDBContainer>
+              </Button>
+            </Row>
+          </div>
         </form>
-      </>
+      </Layout>
     );
   }
 }
