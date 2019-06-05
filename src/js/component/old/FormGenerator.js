@@ -1,7 +1,7 @@
 import React from "react";
 
 import generateHash from "random-hash";
-import { copyObject } from "../utility";
+import { copyObject } from "../../utility";
 import { FormHeader } from "./FormHeader";
 import { Col, Row, Input, Button, Card, Layout } from "antd";
 

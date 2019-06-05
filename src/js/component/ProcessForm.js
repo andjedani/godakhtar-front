@@ -1,10 +1,24 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+
 import { Steps, Layout } from "antd";
+import CustomFooter from "./Footer";
+import CustomHeader from "./Header";
+import DemandRegistration from "./DemandRegistration";
+import DemandReview from "./DemandReveiw";
+import DemandDetailsReview from "./DemandDetailsReview";
+import OtherDocumentsReview from "./OtherDocumentsReview";
+import Pricing from "./Pricing";
 
 const { Step } = Steps;
-const { Header, Footer, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
+
+const list = [
+  DemandRegistration,
+  DemandReview,
+  DemandDetailsReview,
+  OtherDocumentsReview,
+  Pricing
+];
 
 class ProcessForm extends React.Component {
   state = {
@@ -18,20 +32,10 @@ class ProcessForm extends React.Component {
 
   render() {
     const { current } = this.state;
-    const element = (
-      <FontAwesomeIcon
-        icon={faCoffee}
-        style={{
-          marginLeft: "5px",
-          marginRight: "5px",
-          color: "#279faf"
-        }}
-      />
-    );
 
     return (
       <Layout>
-        <Header className="main-color-item palette-volcano-10" />
+        <CustomHeader />
         <Layout style={{ padding: "50px" }}>
           <Sider style={{ padding: "50px" }}>
             <Steps
@@ -39,23 +43,18 @@ class ProcessForm extends React.Component {
               current={current}
               onChange={this.onChange}
             >
-              <Step title="ثبت تقاضا" />
-              <Step title="بررسی اولیه تقاضا" />
-              <Step title="بررسی جزئیات تقاضا" />
-              <Step title="بررسی سایر مدارک" />
-              <Step title="قیمت‌دهی" />
+              {list.map(item => (
+                <Step title={item.displayName} key={item} />
+              ))}
             </Steps>
           </Sider>
           <Content style={{ paddingRight: "50px" }}>
             <Layout style={{ backgroundColor: "#fff", height: "100%" }}>
-              {current}
+              {React.createElement(list[current])}
             </Layout>
           </Content>
         </Layout>
-        <Footer>
-          طراحی و توسعه با {element}
-          در گراف
-        </Footer>
+        <CustomFooter />
       </Layout>
     );
   }

@@ -1,13 +1,11 @@
 export * from "./App";
 
-export * from "./CustomerFormData";
-export * from "./CustomerIdForm";
-
-export * from "./ProductFormData";
 export * from "./ProductForm";
+export * from "./Header";
+export * from "./Footer";
 
-export * from "./FormHeader";
-
-export * from "./FormGenerator";
-
-export * from "./ProductForm";
+export * from "./DemandRegistration";
+export * from "./DemandReveiw";
+export * from "./DemandDetailsReview";
+export * from "./OtherDocumentsReview";
+export * from "./Pricing";

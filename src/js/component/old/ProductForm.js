@@ -1,13 +1,13 @@
 import React from "react";
 
-import { formData } from "./CustomerFormData";
-import { createCustomer } from "../network/customer";
-import { copyObject } from "../utility";
+import { formData } from "./ProductFormData";
+import { createCustomer } from "../../network/customer";
+import { copyObject } from "../../utility";
 import FormGenerator from "./FormGenerator";
 
-const formName = "شناسه مشتری";
+const formName = "شناسه محصول";
 
-class CustomerIdForm extends React.Component {
+class ProductForm extends React.Component {
   sendDataToServer = () => {
     let json = copyObject(this.state.formData);
     const keys = Object.keys(json);
@@ -34,4 +34,4 @@ class CustomerIdForm extends React.Component {
   }
 }
 
-export default CustomerIdForm;
+export default ProductForm;

@@ -72,3 +72,49 @@ body {
   padding-bottom: 70px;
   min-height: 90vh;
 }
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+  left: unset;
+  right: 16px;
+}
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+  padding-left: unset;
+  padding-right: 40px;
+}
+
+.ant-list-item-action {
+  margin-left: unset;
+  margin-right: 48px;
+}
+
+.ant-list:not(.ant-list-vertical) .ant-list-item-no-flex .ant-list-item-action {
+  float: left;
+}
+
+.ant-list-item-action-split {
+  left: 0;
+  right: unset;
+}
+
+.ant-list-item-action > li {
+  padding-right: 8px !important;
+  padding-left: 8px !important;
+}
+
+.ant-list-bordered .ant-list-pagination {
+  text-align: left;
+}
+
+.anticon-right {
+  transform: rotate(180deg);
+}
+
+.anticon-left {
+  transform: rotate(180deg);
+}
+
+.ant-pagination-item {
+  margin-right: 8px;
+  margin-left: 8px;
+}
