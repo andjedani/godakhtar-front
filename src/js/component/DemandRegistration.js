@@ -1,90 +1,36 @@
 import React from "react";
-import { Layout, Collapse, Icon, List, Radio } from "antd";
-import { readCustomer } from "../network/customer";
-import { dashboardUrl } from "../network";
+import { Layout, Collapse, Icon } from "antd";
+import SelectCustomer from "./SelectCustomer";
+import AddProductTable from "./AddProductTable";
 
 const Panel = Collapse.Panel;
 
 class DemandRegistration extends React.Component {
   static displayName = "ثبت تقاضا";
-  state = { data: [], initloading: true, selectedCustomer: null };
 
-  getData = async () => {
-    this.setState({ initloading: true });
-    let data = await readCustomer();
-    if (data) data = data.data;
-    else data = [];
+  state = { selecedCustomer: "" };
 
-    console.log(data);
-    this.setState({ data, initloading: false });
-  };
-
-  onChangeCustomerSelect = e => {
+  setSelectedCustomer = item => {
     this.setState({
-      selectedCustomer: e.target.value
+      selecedCustomer: item ? " > " + item.name + " انتخاب شده است." : ""
     });
   };
 
-  componentWillMount = () => {
-    this.getData();
-  };
-
   render() {
-    const selectedCustomer = this.state.selectedCustomer
-      ? " > " + this.state.selectedCustomer.name + " انتخاب شده است."
-      : "";
     return (
       <Layout>
         <Collapse
+          defaultActiveKey={"2"}
           bordered={false}
           expandIcon={({ isActive }) => (
             <Icon type="caret-right" rotate={isActive ? 90 : 180} />
           )}
         >
-          <Panel header={"تخصیص مشتری" + selectedCustomer} key="1">
-            <Radio.Group
-              onChange={this.onChangeCustomerSelect}
-              value={this.state.selectedCustomer}
-              style={{ width: "100%" }}
-            >
-              <List
-                header={
-                  <div>
-                    <b>مشتریان</b>
-                  </div>
-                }
-                footer={<div />}
-                pagination={{
-                  onChange: page => {
-                    console.log(page);
-                  },
-                  pageSize: 10
-                }}
-                loading={this.state.initloading}
-                bordered
-                dataSource={this.state.data}
-                renderItem={item => (
-                  <List.Item
-                    actions={[
-                      <a
-                        href={dashboardUrl + "customers/customer/" + item.id}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        بیشتر
-                      </a>
-                    ]}
-                  >
-                    <List.Item.Meta
-                      title={<Radio value={item}>{item.name}</Radio>}
-                    />
-                  </List.Item>
-                )}
-              />
-            </Radio.Group>
+          <Panel header={"تخصیص مشتری" + this.state.selecedCustomer} key="1">
+            <SelectCustomer setSelectedCustomer={this.setSelectedCustomer} />
           </Panel>
           <Panel header="ثبت کد محصولات درخواستی" key="2">
-            <p />
+            <AddProductTable />
           </Panel>
         </Collapse>
       </Layout>

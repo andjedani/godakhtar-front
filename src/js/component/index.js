@@ -9,3 +9,6 @@ export * from "./DemandReveiw";
 export * from "./DemandDetailsReview";
 export * from "./OtherDocumentsReview";
 export * from "./Pricing";
+
+export * from "./SelectCustomer";
+export * from "./AddProductTable";
