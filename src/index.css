@@ -126,3 +126,13 @@ body {
 .ant-table table {
   text-align: right;
 }
+
+.ant-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.ant-modal-footer button + button {
+  margin-left: unset;
+  margin-right: 8px;
+}

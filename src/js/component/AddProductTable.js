@@ -1,6 +1,5 @@
 import React from "react";
-import { readCustomer } from "../network/customer";
-import { Table, Select } from "antd";
+import { Table, Select, Button, Modal, Row, Col, Input } from "antd";
 
 const { Option } = Select;
 
@@ -13,7 +12,7 @@ const columns = [
     title: "نوع",
     dataIndex: "type",
     render: () => (
-      <Select defaultValue="lucy" style={{ width: "200px" }}>
+      <Select style={{ width: "200px" }}>
         <Option value="jack">Jack</Option>
         <Option value="lucy">Lucy</Option>
         <Option value="disabled" disabled>
@@ -39,6 +38,7 @@ const columns = [
 
 const data = [
   {
+    key: "1",
     rowNumber: "۱",
     type: "نوع ۱",
     class: "بی‌کلاس",
@@ -48,24 +48,123 @@ const data = [
 ];
 
 class AddProductTable extends React.Component {
-  state = { data: [], initloading: false };
+  state = { data: [], initloading: false, num: 1, visible: false };
 
-  getData = async () => {
-    this.setState({ initloading: true });
-    let data = await readCustomer();
-    if (data) data = data.data;
-    else data = [];
-
-    console.log(data);
-    this.setState({ data, initloading: false });
+  showModal = () => {
+    this.setState({
+      visible: true
+    });
   };
 
-  componentWillMount = () => {
-    this.getData();
+  handleOk = e => {
+    console.log(e);
+    this.setState({
+      visible: false
+    });
+  };
+
+  handleCancel = e => {
+    console.log(e);
+    this.setState({
+      visible: false
+    });
   };
 
   render() {
-    return <Table dataSource={data} columns={columns} scroll={{ x: true }} />;
+    const customs = [];
+    for (let i = 0; i < this.state.num; i++) {
+      customs.push(
+        <Row justify="center" key={i}>
+          <Col span={12} style={{ textAlign: "center", padding: "20px" }}>
+            <Input placeholder="نام" />
+          </Col>
+          <Col span={12} style={{ textAlign: "center", padding: "20px" }}>
+            <Input placeholder="توضیحات" />
+          </Col>
+        </Row>
+      );
+    }
+    return (
+      <>
+        <div>
+          <Button type="primary" onClick={this.showModal}>
+            افزودن محصول درخواستی
+          </Button>
+          <Modal
+            title="افزودن محصول درخواستی"
+            visible={this.state.visible}
+            onOk={this.handleOk}
+            onCancel={this.handleCancel}
+            okText="افزودن"
+            cancelText="بی‌خیال"
+          >
+            <Row justify="center" style={{ margin: "2px" }}>
+              <Col span={12} style={{ textAlign: "center" }}>
+                <b>نوع</b>
+              </Col>
+              <Col span={12} style={{ textAlign: "center" }}>
+                <Select style={{ width: "200px" }}>
+                  <Option value="jack">Jack</Option>
+                  <Option value="lucy">Lucy</Option>
+                  <Option value="disabled" disabled>
+                    Disabled
+                  </Option>
+                  <Option value="Yiminghe">yiminghe</Option>
+                </Select>
+              </Col>
+            </Row>
+            <Row justify="center" style={{ margin: "2px" }}>
+              <Col span={12} style={{ textAlign: "center" }}>
+                <b>کلاس</b>
+              </Col>
+              <Col span={12} style={{ textAlign: "center" }}>
+                <Select style={{ width: "200px" }}>
+                  <Option value="jack">Jack</Option>
+                  <Option value="lucy">Lucy</Option>
+                  <Option value="disabled" disabled>
+                    Disabled
+                  </Option>
+                  <Option value="Yiminghe">yiminghe</Option>
+                </Select>
+              </Col>
+            </Row>
+            <Row justify="center" style={{ margin: "2px" }}>
+              <Col span={12} style={{ textAlign: "center" }}>
+                <b>اتصال</b>
+              </Col>
+              <Col span={12} style={{ textAlign: "center" }}>
+                <Select style={{ width: "200px" }}>
+                  <Option value="jack">Jack</Option>
+                  <Option value="lucy">Lucy</Option>
+                  <Option value="disabled" disabled>
+                    Disabled
+                  </Option>
+                  <Option value="Yiminghe">yiminghe</Option>
+                </Select>
+              </Col>
+            </Row>
+            <Row justify="center" style={{ margin: "2px" }}>
+              <Col span={12} style={{ textAlign: "center" }}>
+                <b>اندازه</b>
+              </Col>
+              <Col span={12} style={{ textAlign: "center" }}>
+                <Select style={{ width: "200px" }}>
+                  <Option value="jack">Jack</Option>
+                  <Option value="lucy">Lucy</Option>
+                  <Option value="disabled" disabled>
+                    Disabled
+                  </Option>
+                  <Option value="Yiminghe">yiminghe</Option>
+                </Select>
+              </Col>
+            </Row>
+
+            {customs}
+          </Modal>
+        </div>
+        <Table dataSource={data} columns={columns} scroll={{ x: true }} />
+      </>
+    );
   }
 }
 
