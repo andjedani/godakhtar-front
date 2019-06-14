@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Select, Button, Row, Col, Card } from "antd";
+import { Table, Select, Button, Row, Col, Card, Input } from "antd";
 import { productOptions, getProductAttrs } from "../network";
 
 const { Option } = Select;
@@ -128,9 +128,42 @@ class AddProductTable extends React.Component {
     if (this.state.product_attr === null) {
       attributes = <Row>چنین محصولی وجود ندارد.</Row>;
     } else {
-      attributes = this.state.product_attr.map(item => (
-        <Row key={item.id}>{item.name}</Row>
-      ));
+      console.log(this.state.product_attr);
+      attributes = this.state.product_attr.map(item => {
+        let tmp;
+        switch (item.type) {
+          case "c":
+            tmp = (
+              <Row key={item.id}>
+                <Col span={4}>{item.name}</Col>
+                <Col span={8}>
+                  <Select style={{ width: 200 }} onChange={() => {}}>
+                    {item.attribute_choices.map(choice => (
+                      <Option value={choice.value} key={choice.id}>
+                        {choice.value}
+                      </Option>
+                    ))}
+                  </Select>
+                </Col>
+              </Row>
+            );
+            break;
+          case "n":
+          case "t":
+            tmp = (
+              <Row key={item.id}>
+                <Col span={4}>{item.name}</Col>
+                <Col span={8}>
+                  <Input />
+                </Col>
+              </Row>
+            );
+            break;
+          default:
+            tmp = <></>;
+        }
+        return tmp;
+      });
     }
 
     return (
