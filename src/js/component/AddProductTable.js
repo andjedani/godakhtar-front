@@ -58,10 +58,11 @@ class AddProductTable extends React.Component {
     product_connection: [],
     product_size: [],
     product_type: [],
-    selectedProductClass: null,
-    selectedProductConnection: null,
-    selectedProductSize: null,
-    selectedProductType: null
+    product_attr: [],
+    selectedProductClass: "",
+    selectedProductConnection: "",
+    selectedProductSize: "",
+    selectedProductType: ""
   };
 
   expandedRowRender = customItems => {
@@ -81,10 +82,12 @@ class AddProductTable extends React.Component {
   };
 
   componentDidMount = async () => {
+    this.setState({ initloading: true });
     let data = await productOptions();
     if (data.data.actions.POST) {
       data = data.data.actions.POST;
       this.setState({
+        initloading: false,
         product_class: data.product_class.choices,
         product_connection: data.product_connection.choices,
         product_size: data.product_size.choices,
@@ -98,29 +101,48 @@ class AddProductTable extends React.Component {
   };
 
   getProductAttributes = async () => {
-    const productName =
+    let productName =
       this.state.selectedProductType +
       this.state.selectedProductClass +
       this.state.selectedProductConnection +
       this.state.selectedProductSize;
 
-    console.log(productName);
-    const data = await getProductAttrs(productName);
-    console.log(data);
+    productName = productName.replace(" ", "_");
+    productName = productName.replace("/", "-");
+
+    try {
+      let data = await getProductAttrs(productName);
+      data = data.data.available_attributes;
+      this.setState({ product_attr: data });
+    } catch (err) {
+      console.log(err);
+      if (err.response.status === 404) {
+        this.setState({ product_attr: null });
+      }
+    }
   };
 
   render() {
     let attributes = [];
 
+    if (this.state.product_attr === null) {
+      attributes = <Row>چنین محصولی وجود ندارد.</Row>;
+    } else {
+      attributes = this.state.product_attr.map(item => (
+        <Row key={item.id}>{item.name}</Row>
+      ));
+    }
+
     return (
       <div>
         <Card>
           <Row justify="center" style={{ margin: "2px" }}>
-            <Col span={2} style={{ textAlign: "center" }}>
+            <Col span={4} style={{ textAlign: "center" }}>
               <b>نوع</b>
             </Col>
-            <Col span={4} style={{ textAlign: "center" }}>
+            <Col span={8} style={{ textAlign: "center" }}>
               <Select
+                loading={this.state.initloading}
                 style={{ width: 200 }}
                 onChange={value =>
                   this.handleProductChange("selectedProductType", value)
@@ -134,11 +156,12 @@ class AddProductTable extends React.Component {
               </Select>
             </Col>
 
-            <Col span={2} style={{ textAlign: "center" }}>
+            <Col span={4} style={{ textAlign: "center" }}>
               <b>کلاس</b>
             </Col>
-            <Col span={4} style={{ textAlign: "center" }}>
+            <Col span={8} style={{ textAlign: "center" }}>
               <Select
+                loading={this.state.initloading}
                 style={{ width: 200 }}
                 onChange={value =>
                   this.handleProductChange("selectedProductClass", value)
@@ -151,12 +174,14 @@ class AddProductTable extends React.Component {
                 ))}
               </Select>
             </Col>
-
-            <Col span={2} style={{ textAlign: "center" }}>
+          </Row>
+          <Row justify="center" style={{ margin: "2px" }}>
+            <Col span={4} style={{ textAlign: "center" }}>
               <b>اتصال</b>
             </Col>
-            <Col span={4} style={{ textAlign: "center" }}>
+            <Col span={8} style={{ textAlign: "center" }}>
               <Select
+                loading={this.state.initloading}
                 style={{ width: 200 }}
                 onChange={value =>
                   this.handleProductChange("selectedProductConnection", value)
@@ -169,11 +194,12 @@ class AddProductTable extends React.Component {
                 ))}
               </Select>
             </Col>
-            <Col span={2} style={{ textAlign: "center" }}>
+            <Col span={4} style={{ textAlign: "center" }}>
               <b>اندازه</b>
             </Col>
-            <Col span={4} style={{ textAlign: "center" }}>
+            <Col span={8} style={{ textAlign: "center" }}>
               <Select
+                loading={this.state.initloading}
                 style={{ width: 200 }}
                 onChange={value =>
                   this.handleProductChange("selectedProductSize", value)
@@ -197,6 +223,7 @@ class AddProductTable extends React.Component {
               </Button>
             </Col>
           </Row>
+
           {attributes}
 
           <br />

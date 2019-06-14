@@ -42,7 +42,7 @@ class SelectCustomer extends React.Component {
               </div>
             }
             footer={<div />}
-            pagination={{ pageSize: 10 }}
+            pagination={{ pageSize: 5 }}
             loading={this.state.initloading}
             bordered
             dataSource={this.state.data}

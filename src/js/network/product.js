@@ -18,7 +18,5 @@ export const getProductAttrs = name => {
     method: "GET",
     url: serviceUrl + "list/" + name
   };
-  return axios(options).catch(function(error) {
-    console.log(error);
-  });
+  return axios.get(options.url);
 };

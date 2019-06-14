@@ -26,7 +26,6 @@ class ProcessForm extends React.Component {
   };
 
   onChange = current => {
-    console.log("onChange:", current);
     this.setState({ current });
   };
 
