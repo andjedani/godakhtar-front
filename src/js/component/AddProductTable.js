@@ -128,7 +128,6 @@ class AddProductTable extends React.Component {
     if (this.state.product_attr === null) {
       attributes = <Row>چنین محصولی وجود ندارد.</Row>;
     } else {
-      console.log(this.state.product_attr);
       attributes = this.state.product_attr.map(item => {
         let tmp;
         switch (item.type) {
