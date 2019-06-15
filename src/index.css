@@ -136,3 +136,14 @@ body {
   margin-left: unset;
   margin-right: 8px;
 }
+
+.ant-btn.ant-btn-loading:not(.ant-btn-circle):not(.ant-btn-circle-outline):not(.ant-btn-icon-only) {
+  padding-right: 29px;
+  padding-left: unset;
+}
+
+.ant-btn.ant-btn-loading:not(.ant-btn-circle):not(.ant-btn-circle-outline):not(.ant-btn-icon-only)
+  .anticon:not(:last-child) {
+  margin-right: -14px;
+  margin-left: 14px;
+}

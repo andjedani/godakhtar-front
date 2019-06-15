@@ -1,10 +1,15 @@
 import React from "react";
-import { Radio, List } from "antd";
+import { Radio, List, Button } from "antd";
 import { readCustomer } from "../network/customer";
 import { dashboardUrl } from "../network";
 
 class SelectCustomer extends React.Component {
-  state = { data: [], initloading: true, selectedCustomer: null };
+  state = {
+    data: [],
+    initloading: false,
+    creatingInquery: false,
+    selectedCustomer: null
+  };
 
   getData = async () => {
     this.setState({ initloading: true });
@@ -15,12 +20,16 @@ class SelectCustomer extends React.Component {
     this.setState({ data, initloading: false });
   };
 
+  createInquery = async () => {
+    this.setState({ creatingInquery: true });
+
+    this.setState({ creatingInquery: false });
+  };
+
   onChangeCustomerSelect = e => {
     this.setState({
       selectedCustomer: e.target.value
     });
-
-    this.props.setSelectedCustomer(e.target.value);
   };
 
   componentWillMount = () => {
@@ -41,7 +50,18 @@ class SelectCustomer extends React.Component {
                 <b>مشتریان</b>
               </div>
             }
-            footer={<div />}
+            footer={
+              <div>
+                <Button
+                  type="primary"
+                  disabled={this.state.selectedCustomer == null}
+                  loading={this.state.creatingInquery}
+                  onClick={this.createInquery}
+                >
+                  انتخاب مشتری
+                </Button>
+              </div>
+            }
             pagination={{ pageSize: 5 }}
             loading={this.state.initloading}
             bordered

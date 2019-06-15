@@ -8,14 +8,6 @@ const Panel = Collapse.Panel;
 class DemandRegistration extends React.Component {
   static displayName = "ثبت تقاضا";
 
-  state = { selecedCustomer: "" };
-
-  setSelectedCustomer = item => {
-    this.setState({
-      selecedCustomer: item ? " > " + item.name + " انتخاب شده است." : ""
-    });
-  };
-
   render() {
     return (
       <Layout>
@@ -26,8 +18,8 @@ class DemandRegistration extends React.Component {
             <Icon type="caret-right" rotate={isActive ? 90 : 180} />
           )}
         >
-          <Panel header={"تخصیص مشتری" + this.state.selecedCustomer} key="1">
-            <SelectCustomer setSelectedCustomer={this.setSelectedCustomer} />
+          <Panel header={"تخصیص مشتری"} key="1">
+            <SelectCustomer />
           </Panel>
           <Panel header="ثبت کد محصولات درخواستی" key="2">
             <AddProductTable />

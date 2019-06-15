@@ -133,7 +133,7 @@ class AddProductTable extends React.Component {
         switch (item.type) {
           case "c":
             tmp = (
-              <Row key={item.id}>
+              <>
                 <Col span={4}>{item.name}</Col>
                 <Col span={8}>
                   <Select style={{ width: 200 }} onChange={() => {}}>
@@ -144,24 +144,28 @@ class AddProductTable extends React.Component {
                     ))}
                   </Select>
                 </Col>
-              </Row>
+              </>
             );
             break;
           case "n":
           case "t":
             tmp = (
-              <Row key={item.id}>
+              <>
                 <Col span={4}>{item.name}</Col>
                 <Col span={8}>
                   <Input />
                 </Col>
-              </Row>
+              </>
             );
             break;
           default:
             tmp = <></>;
         }
-        return tmp;
+        return (
+          <Row key={item.id} style={{ margin: 5 }}>
+            {tmp}
+          </Row>
+        );
       });
     }
 
@@ -248,10 +252,18 @@ class AddProductTable extends React.Component {
 
           <br />
 
-          <Row>
+          <Row hidden>
             <Col>
               <Button type="dashed" onClick={this.getProductAttributes}>
                 دریافت ویژگی‌ها
+              </Button>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <Button type="dashed" onClick={() => {}}>
+                بررسی موجودی
               </Button>
             </Col>
           </Row>
