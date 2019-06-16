@@ -1,14 +1,15 @@
 import React from "react";
 import { Radio, List, Button } from "antd";
 import { readCustomer } from "../network/customer";
-import { dashboardUrl, createInquery } from "../network";
+import { dashboardUrl, createInquiry } from "../network";
 
 class SelectCustomer extends React.Component {
   state = {
     data: [],
     initloading: false,
-    creatingInquery: false,
-    selectedCustomer: null
+    creatingInquiry: false,
+    selectedCustomer: null,
+    selectedInquiry: null
   };
 
   getData = async () => {
@@ -20,13 +21,15 @@ class SelectCustomer extends React.Component {
     this.setState({ data, initloading: false });
   };
 
-  createInqueryNetwork = async () => {
-    this.setState({ creatingInquery: true });
+  createInquiryNetwork = async () => {
+    this.setState({ creatingInquiry: true });
 
-    let data = await createInquery({ customer: this.state.selectedCustomer });
-    console.log(data);
+    let data = await createInquiry({
+      customer: this.state.selectedCustomer.id
+    });
 
-    this.setState({ creatingInquery: false });
+    this.setState({ selectedInquiry: data.data.id, creatingInquiry: false });
+    this.props.selectInquiryId(data.data.id);
   };
 
   onChangeCustomerSelect = e => {
@@ -40,6 +43,14 @@ class SelectCustomer extends React.Component {
   };
 
   render() {
+    let selectCustomerButton = this.state.selectedInquiry
+      ? "مشتری انتخاب شده است"
+      : "انتخاب مشتری";
+
+    let customerHeader = this.state.selectedInquiry
+      ? "مشتری انتخاب شده است: " + this.state.selectedCustomer.name
+      : "مشتریان";
+
     return (
       <>
         <Radio.Group
@@ -50,17 +61,21 @@ class SelectCustomer extends React.Component {
           <List
             header={
               <div>
-                <b>مشتریان</b>
+                <b>{customerHeader}</b>
               </div>
             }
             footer={
               <Button
                 type="primary"
-                disabled={this.state.selectedCustomer == null}
-                loading={this.state.creatingInquery}
-                onClick={this.createInqueryNetwork}
+                disabled={
+                  this.state.selectedCustomer == null ||
+                  this.state.selectedInquiry != null ||
+                  this.state.creatingInquiry
+                }
+                loading={this.state.creatingInquiry}
+                onClick={this.createInquiryNetwork}
               >
-                انتخاب مشتری
+                {selectCustomerButton}
               </Button>
             }
             pagination={{ pageSize: 5 }}
@@ -80,7 +95,17 @@ class SelectCustomer extends React.Component {
                 ]}
               >
                 <List.Item.Meta
-                  title={<Radio value={item}>{item.name}</Radio>}
+                  title={
+                    <Radio
+                      disabled={
+                        this.state.selectedInquiry != null ||
+                        this.state.creatingInquiry
+                      }
+                      value={item}
+                    >
+                      {item.name}
+                    </Radio>
+                  }
                 />
               </List.Item>
             )}

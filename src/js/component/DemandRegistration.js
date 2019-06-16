@@ -8,21 +8,30 @@ const Panel = Collapse.Panel;
 class DemandRegistration extends React.Component {
   static displayName = "ثبت تقاضا";
 
+  state = { inquiryId: null };
+
+  selectInquiryId = inquiryId => {
+    this.setState({ inquiryId });
+  };
+
   render() {
     return (
       <Layout>
         <Collapse
-          defaultActiveKey={"2"}
           bordered={false}
           expandIcon={({ isActive }) => (
             <Icon type="caret-right" rotate={isActive ? 90 : 180} />
           )}
         >
           <Panel header={"تخصیص مشتری"} key="1">
-            <SelectCustomer />
+            <SelectCustomer selectInquiryId={this.selectInquiryId} />
           </Panel>
-          <Panel header="ثبت کد محصولات درخواستی" key="2">
-            <AddProductTable />
+          <Panel
+            header="ثبت کد محصولات درخواستی"
+            key="2"
+            disabled={this.state.inquiryId == null}
+          >
+            <AddProductTable inquiryId={this.state.inquiryId} />
           </Panel>
         </Collapse>
       </Layout>

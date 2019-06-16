@@ -1,6 +1,6 @@
 import React from "react";
-import { Table, Select, Button, Row, Col, Card } from "antd";
-import { productOptions } from "../network";
+import { Table, Select, Button, Row, Col, Card, InputNumber } from "antd";
+import { productOptions, addSignleProductToInquiry } from "../network";
 
 const { Option } = Select;
 
@@ -24,36 +24,18 @@ const columns = [
   {
     title: "اندازه",
     dataIndex: "size"
+  },
+  {
+    title: "تعداد",
+    dataIndex: "quantity"
   }
-];
-
-const data = [
-  // {
-  // key: "1",
-  // rowNumber: "۱",
-  // type: "نوع ۱",
-  // class: "بی‌کلاس",
-  // connection: "کوتاه",
-  // size: "ایکس لارج",
-  // customs: {
-  //   "آینم ۰": "0",
-  //   "آینم ۱": "1",
-  //   "آینم ۲": "2",
-  //   "آینم ۳": "3",
-  //   "آینم ۴": "4",
-  //   "آینم ۵": "5",
-  //   "آینم ۶": "6",
-  //   "آینم ۷": "7",
-  //   "آینم ۸": "8",
-  //   "آینم ۹": "9"
-  // }
-  // }
 ];
 
 class AddProductTable extends React.Component {
   state = {
     data: [],
     initloading: false,
+    addProductLoading: false,
     product_class: [],
     product_connection: [],
     product_size: [],
@@ -61,7 +43,9 @@ class AddProductTable extends React.Component {
     selectedProductClass: "",
     selectedProductConnection: "",
     selectedProductSize: "",
-    selectedProductType: ""
+    selectedProductType: "",
+    quantity: 1,
+    num: 0
   };
 
   componentDidMount = async () => {
@@ -84,16 +68,46 @@ class AddProductTable extends React.Component {
   };
 
   addProduct = async () => {
-    let productName =
-      this.state.selectedProductType +
-      this.state.selectedProductClass +
-      this.state.selectedProductConnection +
-      this.state.selectedProductSize;
+    this.setState({ addProductLoading: true });
 
-    productName = productName.replace(" ", "_");
-    productName = productName.replace("/", "-");
+    const res = await addSignleProductToInquiry(this.props.inquiryId, {
+      product_type: this.state.selectedProductType,
+      product_size: this.state.selectedProductSize,
+      product_class: this.state.selectedProductClass,
+      product_connection: this.state.selectedProductConnection,
+      quantity: this.state.quantity
+    });
 
-    console.log(productName);
+    const newProduct = {
+      key: this.state.num,
+      rowNumber: this.state.num,
+      type: this.state.product_type.reduce((map, item) => {
+        map[item.value] = item.display_name;
+        return map;
+      })[this.state.selectedProductType],
+      class: this.state.product_class.reduce((map, item) => {
+        map[item.value] = item.display_name;
+        return map;
+      })[this.state.selectedProductClass],
+      connection: this.state.product_connection.reduce((map, item) => {
+        map[item.value] = item.display_name;
+        return map;
+      })[this.state.selectedProductConnection],
+      size: this.state.product_size.reduce((map, item) => {
+        map[item.value] = item.display_name;
+        return map;
+      })[this.state.selectedProductSize],
+      quantity: this.state.quantity
+    };
+
+    if (res.status === 200) {
+      this.setState(prevState => ({
+        num: prevState.num + 1,
+        data: [...prevState.data, newProduct]
+      }));
+    }
+
+    this.setState({ addProductLoading: false });
   };
 
   render() {
@@ -178,13 +192,32 @@ class AddProductTable extends React.Component {
             </Col>
           </Row>
 
+          <Row justify="center" style={{ margin: "2px" }}>
+            <Col span={4} style={{ textAlign: "center" }}>
+              <b>تعداد</b>
+            </Col>
+            <Col span={8} style={{ textAlign: "center" }}>
+              <InputNumber
+                min={1}
+                defaultValue={1}
+                onChange={value => this.handleProductChange("quantity", value)}
+                style={{ width: 200 }}
+              />
+            </Col>
+          </Row>
+
           <br />
 
-          <Button type="primary" onClick={this.addProduct}>
+          <Button
+            type="primary"
+            onClick={this.addProduct}
+            loading={this.state.addProductLoading}
+            disabled={this.state.addProductLoading}
+          >
             افزودن محصول درخواستی
           </Button>
         </Card>
-        <Table dataSource={data} columns={columns} />
+        <Table dataSource={this.state.data} columns={columns} />
       </div>
     );
   }
