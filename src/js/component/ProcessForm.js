@@ -33,7 +33,7 @@ class ProcessForm extends React.Component {
     const { current } = this.state;
 
     return (
-      <Layout>
+      <Layout className="layout">
         <CustomHeader />
         <Layout style={{ padding: "50px" }}>
           <Sider style={{ padding: "50px" }}>

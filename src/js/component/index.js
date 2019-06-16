@@ -1,6 +1,8 @@
 export * from "./App";
 
 export * from "./ProductForm";
+export * from "./Home";
+
 export * from "./Header";
 export * from "./Footer";
 

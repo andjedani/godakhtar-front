@@ -23,21 +23,15 @@ body {
   margin-left: 16px;
 }
 
-.ant-layout-header {
-  background-color: #fff;
-  align-items: center;
-  text-align: center;
+.logo {
+  width: 120px;
+  height: 31px;
   background-image: url("./static/img/logo.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  position: fixed;
-  height: 70px;
-  top: 0;
-  right: 0;
-  left: 0;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  z-index: 10;
+  margin: 16px 24px 16px 0;
+  float: left;
 }
 
 .ant-layout-sider {

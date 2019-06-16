@@ -1,7 +1,7 @@
 import React from "react";
 import { Radio, List, Button } from "antd";
 import { readCustomer } from "../network/customer";
-import { dashboardUrl } from "../network";
+import { dashboardUrl, createInquery } from "../network";
 
 class SelectCustomer extends React.Component {
   state = {
@@ -20,8 +20,11 @@ class SelectCustomer extends React.Component {
     this.setState({ data, initloading: false });
   };
 
-  createInquery = async () => {
+  createInqueryNetwork = async () => {
     this.setState({ creatingInquery: true });
+
+    let data = await createInquery({ customer: this.state.selectedCustomer });
+    console.log(data);
 
     this.setState({ creatingInquery: false });
   };
@@ -51,16 +54,14 @@ class SelectCustomer extends React.Component {
               </div>
             }
             footer={
-              <div>
-                <Button
-                  type="primary"
-                  disabled={this.state.selectedCustomer == null}
-                  loading={this.state.creatingInquery}
-                  onClick={this.createInquery}
-                >
-                  انتخاب مشتری
-                </Button>
-              </div>
+              <Button
+                type="primary"
+                disabled={this.state.selectedCustomer == null}
+                loading={this.state.creatingInquery}
+                onClick={this.createInqueryNetwork}
+              >
+                انتخاب مشتری
+              </Button>
             }
             pagination={{ pageSize: 5 }}
             loading={this.state.initloading}

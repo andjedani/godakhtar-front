@@ -1,6 +1,6 @@
 import React from "react";
-import { Table, Select, Button, Row, Col, Card, Input } from "antd";
-import { productOptions, getProductAttrs } from "../network";
+import { Table, Select, Button, Row, Col, Card } from "antd";
+import { productOptions } from "../network";
 
 const { Option } = Select;
 
@@ -58,27 +58,10 @@ class AddProductTable extends React.Component {
     product_connection: [],
     product_size: [],
     product_type: [],
-    product_attr: [],
     selectedProductClass: "",
     selectedProductConnection: "",
     selectedProductSize: "",
     selectedProductType: ""
-  };
-
-  expandedRowRender = customItems => {
-    const columns = [];
-    const data = {};
-    Object.entries(customItems).forEach(([key, value]) => {
-      columns.push({ title: key, dataIndex: key });
-      data[key] = value;
-    });
-    return (
-      <Table
-        dataSource={[data]}
-        columns={columns}
-        pagination={{ position: "none" }}
-      />
-    );
   };
 
   componentDidMount = async () => {
@@ -100,7 +83,7 @@ class AddProductTable extends React.Component {
     this.setState({ [arg]: value });
   };
 
-  getProductAttributes = async () => {
+  addProduct = async () => {
     let productName =
       this.state.selectedProductType +
       this.state.selectedProductClass +
@@ -110,65 +93,10 @@ class AddProductTable extends React.Component {
     productName = productName.replace(" ", "_");
     productName = productName.replace("/", "-");
 
-    try {
-      let data = await getProductAttrs(productName);
-      data = data.data.available_attributes;
-      this.setState({ product_attr: data });
-    } catch (err) {
-      console.log(err);
-      if (err.response.status === 404) {
-        this.setState({ product_attr: null });
-      }
-    }
+    console.log(productName);
   };
 
   render() {
-    let attributes = [];
-
-    if (this.state.product_attr === null) {
-      attributes = <Row>چنین محصولی وجود ندارد.</Row>;
-    } else {
-      attributes = this.state.product_attr.map(item => {
-        let tmp;
-        switch (item.type) {
-          case "c":
-            tmp = (
-              <>
-                <Col span={4}>{item.name}</Col>
-                <Col span={8}>
-                  <Select style={{ width: 200 }} onChange={() => {}}>
-                    {item.attribute_choices.map(choice => (
-                      <Option value={choice.value} key={choice.id}>
-                        {choice.value}
-                      </Option>
-                    ))}
-                  </Select>
-                </Col>
-              </>
-            );
-            break;
-          case "n":
-          case "t":
-            tmp = (
-              <>
-                <Col span={4}>{item.name}</Col>
-                <Col span={8}>
-                  <Input />
-                </Col>
-              </>
-            );
-            break;
-          default:
-            tmp = <></>;
-        }
-        return (
-          <Row key={item.id} style={{ margin: 5 }}>
-            {tmp}
-          </Row>
-        );
-      });
-    }
-
     return (
       <div>
         <Card>
@@ -252,34 +180,11 @@ class AddProductTable extends React.Component {
 
           <br />
 
-          <Row hidden>
-            <Col>
-              <Button type="dashed" onClick={this.getProductAttributes}>
-                دریافت ویژگی‌ها
-              </Button>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col>
-              <Button type="dashed" onClick={() => {}}>
-                بررسی موجودی
-              </Button>
-            </Col>
-          </Row>
-
-          {attributes}
-
-          <br />
-          <Button type="primary" onClick={() => {}}>
+          <Button type="primary" onClick={this.addProduct}>
             افزودن محصول درخواستی
           </Button>
         </Card>
-        <Table
-          dataSource={data}
-          columns={columns}
-          expandedRowRender={record => this.expandedRowRender(record.customs)}
-        />
+        <Table dataSource={data} columns={columns} />
       </div>
     );
   }
