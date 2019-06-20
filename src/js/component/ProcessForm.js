@@ -8,6 +8,7 @@ import DemandReview from "./DemandReveiw";
 import DemandDetailsReview from "./DemandDetailsReview";
 import OtherDocumentsReview from "./OtherDocumentsReview";
 import Pricing from "./Pricing";
+import { getInquiryById } from "../network";
 
 const { Step } = Steps;
 const { Sider, Content } = Layout;
@@ -23,6 +24,19 @@ const list = [
 class ProcessForm extends React.Component {
   state = {
     current: 0
+  };
+
+  componentWillMount() {
+    if (this.props.match.params.id) {
+      this.getInquiry(this.props.match.params.id);
+    }
+  }
+
+  getInquiry = async id => {
+    console.log(id);
+    let data = await getInquiryById(id);
+    console.log(data.data);
+    return data;
   };
 
   onChange = current => {

@@ -8,6 +8,7 @@ class Home extends React.Component {
     return (
       <Layout>
         <CustomHeader />
+        <Layout className="main-home" />
       </Layout>
     );
   }

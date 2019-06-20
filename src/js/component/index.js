@@ -1,6 +1,7 @@
 export * from "./App";
 
 export * from "./ProductForm";
+export * from "./InquiryList";
 export * from "./Home";
 
 export * from "./Header";

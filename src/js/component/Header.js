@@ -1,10 +1,14 @@
 import React from "react";
 import { Layout, Menu } from "antd";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const { Header } = Layout;
 
 class CustomHeader extends React.Component {
+  state = {
+    selected: "0"
+  };
+
   render() {
     return (
       <Header
@@ -16,12 +20,17 @@ class CustomHeader extends React.Component {
         }}
       >
         <div className="logo" />
-        <Menu theme="light" mode="horizontal" style={{ lineHeight: "64px" }}>
+        <Menu
+          theme="light"
+          mode="horizontal"
+          style={{ lineHeight: "64px" }}
+          selectedKeys={this.state.selectedKeys}
+        >
           <Menu.Item key="1">
-            <Link to="/inquery">لیست سفارش‌ها</Link>
+            <NavLink to="/inquiry">لیست سفارش‌ها</NavLink>
           </Menu.Item>
           <Menu.Item key="2">
-            <Link to="/inquery/add">افزودن سفارش</Link>
+            <NavLink to="/inquiry/add">افزودن سفارش</NavLink>
           </Menu.Item>
         </Menu>
       </Header>

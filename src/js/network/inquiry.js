@@ -24,3 +24,23 @@ export const addSignleProductToInquiry = (inquiryId, json) => {
     console.log(error);
   });
 };
+
+export const getInquiries = () => {
+  const options = {
+    method: "GET",
+    url: serviceUrl
+  };
+  return axios(options).catch(function(error) {
+    console.log(error);
+  });
+};
+
+export const getInquiryById = inquiryId => {
+  const options = {
+    method: "GET",
+    url: serviceUrl + inquiryId
+  };
+  return axios(options).catch(function(error) {
+    console.log(error);
+  });
+};
