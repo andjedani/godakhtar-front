@@ -6,7 +6,13 @@ import { getInquiries } from "../network";
 
 const columns = [
   { title: "شماره سفارش", dataIndex: "id" },
-  { title: "مشتری", dataIndex: "customer" },
+  {
+    title: "مشتری",
+    dataIndex: "customer",
+    render: customer => {
+      return <div>{customer.name}</div>;
+    }
+  },
   { title: "آدرس ارسال", dataIndex: "delivery_address" },
   { title: "گارانتی", dataIndex: "guaranty" },
   { title: "وارانتی", dataIndex: "warranty" },
@@ -22,7 +28,6 @@ class InquiryList extends React.Component {
     let data = await getInquiries();
     data = data.data;
     this.setState({ data });
-    console.log(data);
   };
 
   render() {
@@ -35,7 +40,7 @@ class InquiryList extends React.Component {
             columns={columns}
             dataSource={this.state.data}
             rowKey="id"
-            onRow={(record, rowIndex) => {
+            onRow={record => {
               return {
                 onClick: event => {
                   this.props.history.push("/inquiry/" + record.id);

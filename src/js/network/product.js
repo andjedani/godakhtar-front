@@ -13,10 +13,18 @@ export const productOptions = () => {
   });
 };
 
+export const getProductById = id => {
+  const options = {
+    method: "GET",
+    url: serviceUrl + id
+  };
+  return axios(options);
+};
+
 export const getProductAttrs = name => {
   const options = {
     method: "GET",
     url: serviceUrl + "list/" + name
   };
-  return axios.get(options.url);
+  return axios(options);
 };

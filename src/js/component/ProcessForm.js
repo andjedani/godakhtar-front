@@ -9,6 +9,7 @@ import DemandDetailsReview from "./DemandDetailsReview";
 import OtherDocumentsReview from "./OtherDocumentsReview";
 import Pricing from "./Pricing";
 import { getInquiryById } from "../network";
+import { copyObject } from "../utility/object";
 
 const { Step } = Steps;
 const { Sider, Content } = Layout;
@@ -23,24 +24,25 @@ const list = [
 
 class ProcessForm extends React.Component {
   state = {
-    current: 0
+    current: 0,
+    stepProps: [{}, {}, {}, {}, {}]
   };
 
-  componentWillMount() {
+  componentDidMount = async () => {
     if (this.props.match.params.id) {
-      this.getInquiry(this.props.match.params.id);
+      let data = await getInquiryById(this.props.match.params.id);
+      if (data) {
+        data = data.data;
+
+        let tmpList = copyObject(this.state.stepProps);
+
+        tmpList[0] = {
+          inquiry: data
+        };
+
+        this.setState({ stepProps: tmpList });
+      }
     }
-  }
-
-  getInquiry = async id => {
-    console.log(id);
-    let data = await getInquiryById(id);
-    console.log(data.data);
-    return data;
-  };
-
-  onChange = current => {
-    this.setState({ current });
   };
 
   render() {
@@ -54,7 +56,9 @@ class ProcessForm extends React.Component {
             <Steps
               direction="vertical"
               current={current}
-              onChange={this.onChange}
+              onChange={current => {
+                this.setState({ current });
+              }}
             >
               {list.map(item => (
                 <Step title={item.displayName} key={item} />
@@ -63,7 +67,10 @@ class ProcessForm extends React.Component {
           </Sider>
           <Content style={{ paddingRight: "50px" }}>
             <Layout style={{ backgroundColor: "#fff", height: "100%" }}>
-              {React.createElement(list[current])}
+              {React.createElement(
+                list[current],
+                this.state.stepProps[current]
+              )}
             </Layout>
           </Content>
         </Layout>

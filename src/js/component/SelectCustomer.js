@@ -5,41 +5,40 @@ import { dashboardUrl, createInquiry } from "../network";
 
 class SelectCustomer extends React.Component {
   state = {
-    data: [],
+    customerList: [],
     initloading: false,
     creatingInquiry: false,
     selectedCustomer: null,
     selectedInquiry: null
   };
 
-  getData = async () => {
-    this.setState({ initloading: true });
-    let data = await readCustomer();
-    if (data) data = data.data;
-    else data = [];
-
-    this.setState({ data, initloading: false });
-  };
-
   createInquiryNetwork = async () => {
     this.setState({ creatingInquiry: true });
 
     let data = await createInquiry({
-      customer: this.state.selectedCustomer.id
+      customer_id: this.state.selectedCustomer.id
     });
+    console.log(data);
 
     this.setState({ selectedInquiry: data.data.id, creatingInquiry: false });
     this.props.selectInquiryId(data.data.id);
   };
 
-  onChangeCustomerSelect = e => {
-    this.setState({
-      selectedCustomer: e.target.value
-    });
-  };
+  componentWillMount = async () => {
+    this.setState({ initloading: true });
+    let data = await readCustomer();
+    if (data) data = data.data;
+    else data = [];
 
-  componentWillMount = () => {
-    this.getData();
+    this.setState({ customerList: data, initloading: false });
+
+    if (this.props.inquiry) {
+      this.setState({
+        selectedInquiry: this.props.inquiry.id,
+        selectedCustomer: this.props.inquiry.customer
+      });
+      this.props.selectInquiryId(this.props.inquiry.id);
+    }
   };
 
   render() {
@@ -54,7 +53,11 @@ class SelectCustomer extends React.Component {
     return (
       <>
         <Radio.Group
-          onChange={this.onChangeCustomerSelect}
+          onChange={e => {
+            this.setState({
+              selectedCustomer: e.target.value
+            });
+          }}
           value={this.state.selectedCustomer}
           style={{ width: "100%" }}
         >
@@ -81,7 +84,7 @@ class SelectCustomer extends React.Component {
             pagination={{ pageSize: 5 }}
             loading={this.state.initloading}
             bordered
-            dataSource={this.state.data}
+            dataSource={this.state.customerList}
             renderItem={item => (
               <List.Item
                 actions={[

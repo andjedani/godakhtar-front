@@ -24,14 +24,20 @@ class DemandRegistration extends React.Component {
           )}
         >
           <Panel header={"تخصیص مشتری"} key="1">
-            <SelectCustomer selectInquiryId={this.selectInquiryId} />
+            <SelectCustomer
+              selectInquiryId={this.selectInquiryId}
+              inquiry={this.props.inquiry}
+            />
           </Panel>
           <Panel
             header="ثبت کد محصولات درخواستی"
             key="2"
             disabled={this.state.inquiryId == null}
           >
-            <AddProductTable inquiryId={this.state.inquiryId} />
+            <AddProductTable
+              inquiryId={this.state.inquiryId}
+              inquiry={this.props.inquiry}
+            />
           </Panel>
         </Collapse>
       </Layout>
