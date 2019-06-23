@@ -150,3 +150,14 @@ body {
   background-size: contain;
   background-position: center;
 }
+
+.ant-input-group-addon:first-child {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+}
+
+.ant-input-group > .ant-input:last-child,
+.ant-input-group-addon:last-child {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+}
