@@ -11,7 +11,8 @@ const { Option } = Select;
 const columns = [
   {
     title: "شماره",
-    dataIndex: "rowNumber"
+    dataIndex: "rowNumber",
+    render: item => item + 1
   },
   {
     title: "نوع",
@@ -40,6 +41,7 @@ class AddProductTable extends React.Component {
     data: [],
     initloading: false,
     addProductLoading: false,
+    tableLoading: false,
     product_class: [],
     product_connection: [],
     product_size: [],
@@ -95,6 +97,7 @@ class AddProductTable extends React.Component {
     if (this.props.inquiry) {
       const inquiryList = this.props.inquiry.inquiry_products;
       for (let i = 0; i < inquiryList.length; i++) {
+        this.setState({ tableLoading: true });
         getProductById(inquiryList[i].product).then(resp => {
           let data = resp.data ? resp.data : [];
 
@@ -105,6 +108,8 @@ class AddProductTable extends React.Component {
             data.product_connection,
             inquiryList[i].quantity
           );
+
+          this.setState({ tableLoading: false });
         });
       }
     }
@@ -141,6 +146,8 @@ class AddProductTable extends React.Component {
       quantity: this.state.quantity
     });
 
+    console.log(res);
+
     if (res.status === 200) {
       this.addProductToTable(
         this.state.selectedProductType,
@@ -155,6 +162,7 @@ class AddProductTable extends React.Component {
   };
 
   render() {
+    console.log(this.state.tableLoading);
     return (
       <div>
         <Card>
@@ -261,7 +269,11 @@ class AddProductTable extends React.Component {
             افزودن محصول درخواستی
           </Button>
         </Card>
-        <Table dataSource={this.state.data} columns={columns} />
+        <Table
+          dataSource={this.state.data}
+          columns={columns}
+          loading={this.state.tableLoading}
+        />
       </div>
     );
   }

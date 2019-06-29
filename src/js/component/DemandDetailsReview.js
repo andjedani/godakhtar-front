@@ -1,5 +1,7 @@
 import React from "react";
 import { Layout, Collapse, Icon } from "antd";
+import BusinessProperties from "./BusinessProperties";
+import CustomerPriorities from "./CustomerPriorities";
 
 const Panel = Collapse.Panel;
 
@@ -16,20 +18,18 @@ class DemandDetailsReview extends React.Component {
           )}
         >
           <Panel header="تکمیل مشخصات هر کد محصول" key="1">
-            <p>Hi</p>
+            <p>hi</p>
           </Panel>
           <Panel header="بررسی اسناد مناقصه و استخراج شرایط بازرگانی" key="2">
-            <p>Hi</p>
+            <BusinessProperties />
           </Panel>
           <Panel header="اولویت‌های مورد نظر مشتری" key="3">
-            <p>Hi</p>
+            <CustomerPriorities />
           </Panel>
           <Panel
             header="تهیه‌ی نامه‌ی درخواست ضمانت‌نامه شرکت در مناقصه در صورت نیاز"
             key="4"
-          >
-            <p>Hi</p>
-          </Panel>
+          />
         </Collapse>
       </Layout>
     );

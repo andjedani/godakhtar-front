@@ -15,3 +15,6 @@ export * from "./Pricing";
 
 export * from "./SelectCustomer";
 export * from "./AddProductTable";
+
+export * from "./BusinessProperties";
+export * from "./CustomerPriorities";

@@ -21,13 +21,15 @@ const columns = [
 
 class InquiryList extends React.Component {
   state = {
-    data: []
+    data: [],
+    loading: false
   };
 
   componentDidMount = async () => {
+    this.setState({ loading: true });
     let data = await getInquiries();
     data = data.data;
-    this.setState({ data });
+    this.setState({ data, loading: false });
   };
 
   render() {
@@ -39,6 +41,7 @@ class InquiryList extends React.Component {
           <Table
             columns={columns}
             dataSource={this.state.data}
+            loading={this.state.loading}
             rowKey="id"
             onRow={record => {
               return {
