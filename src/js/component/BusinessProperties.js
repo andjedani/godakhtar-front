@@ -44,7 +44,7 @@ class BusinessProperties extends React.Component {
               <span>
                 <DatePicker
                   timePicker={false}
-                  onClickSubmitButton={value => console.log(value["_i"])}
+                  onClickSubmitButton={({ value }) => console.log(value["_i"])}
                 />
               </span>
             </Col>
