@@ -67,11 +67,6 @@ body {
   min-height: 90vh;
 }
 
-.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
-  left: unset;
-  right: 16px;
-}
-
 .ant-collapse > .ant-collapse-item > .ant-collapse-header {
   padding-left: unset;
   padding-right: 40px;

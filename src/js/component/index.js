@@ -22,3 +22,5 @@ export * from "./TechnologyLevel";
 export * from "./TenderOfficePaper";
 export * from "./CheckTenderOfficePaper";
 export * from "./ReleaseDate";
+
+export * from "./DeleteButton";

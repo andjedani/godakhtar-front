@@ -13,7 +13,9 @@ class OtherDocumentsReview extends React.Component {
     return (
       <Layout>
         <Collapse
+          accordion
           bordered={false}
+          expandIconPosition="right"
           expandIcon={({ isActive }) => (
             <Icon type="caret-right" rotate={isActive ? 90 : 180} />
           )}

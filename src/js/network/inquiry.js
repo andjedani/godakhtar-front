@@ -25,6 +25,17 @@ export const addSignleProductToInquiry = (inquiryId, json) => {
   });
 };
 
+export const deleteSignleProductToInquiry = (inquiryId, product_id) => {
+  const options = {
+    method: "DELETE",
+    url: serviceUrl + inquiryId + "/deleteproduct/",
+    data: { product_id }
+  };
+  return axios(options).catch(function(error) {
+    console.log(error);
+  });
+};
+
 export const getInquiries = () => {
   const options = {
     method: "GET",

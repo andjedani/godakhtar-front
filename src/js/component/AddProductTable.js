@@ -5,36 +5,9 @@ import {
   addSignleProductToInquiry,
   getProductById
 } from "../network";
+import DeleteButton from "./DeleteButton";
 
 const { Option } = Select;
-
-const columns = [
-  {
-    title: "شماره",
-    dataIndex: "rowNumber",
-    render: item => item + 1
-  },
-  {
-    title: "نوع",
-    dataIndex: "type"
-  },
-  {
-    title: "کلاس",
-    dataIndex: "class"
-  },
-  {
-    title: "اتصال",
-    dataIndex: "connection"
-  },
-  {
-    title: "اندازه",
-    dataIndex: "size"
-  },
-  {
-    title: "تعداد",
-    dataIndex: "quantity"
-  }
-];
 
 class AddProductTable extends React.Component {
   state = {
@@ -56,6 +29,46 @@ class AddProductTable extends React.Component {
     selectedProductType: "",
     quantity: 1
   };
+
+  columns = [
+    {
+      title: "شماره",
+      dataIndex: "rowNumber",
+      render: item => item + 1
+    },
+    {
+      title: "نوع",
+      dataIndex: "type"
+    },
+    {
+      title: "کلاس",
+      dataIndex: "class"
+    },
+    {
+      title: "اتصال",
+      dataIndex: "connection"
+    },
+    {
+      title: "اندازه",
+      dataIndex: "size"
+    },
+    {
+      title: "تعداد",
+      dataIndex: "quantity"
+    },
+    {
+      title: "حذف",
+      key: "action",
+      render: record => {
+        return (
+          <DeleteButton
+            inquiryId={this.props.inquiry.id}
+            productId={record.id}
+          />
+        );
+      }
+    }
+  ];
 
   componentDidMount = async () => {
     this.setState({ initloading: true });
@@ -102,6 +115,7 @@ class AddProductTable extends React.Component {
           let data = resp.data ? resp.data : [];
 
           this.addProductToTable(
+            data.id,
             data.product_type,
             data.product_size,
             data.product_class,
@@ -119,8 +133,9 @@ class AddProductTable extends React.Component {
     this.setState({ [arg]: value });
   };
 
-  addProductToTable(pType, pSize, pClass, pConnection, pQuantity) {
+  addProductToTable(id, pType, pSize, pClass, pConnection, pQuantity) {
     const newProduct = {
+      id,
       key: this.state.data.length,
       rowNumber: this.state.data.length,
       type: this.state.product_type_map[pType],
@@ -138,7 +153,7 @@ class AddProductTable extends React.Component {
   addProduct = async () => {
     this.setState({ addProductLoading: true });
 
-    const res = await addSignleProductToInquiry(this.props.inquiryId, {
+    const res = await addSignleProductToInquiry(this.props.inquiry.id, {
       product_type: this.state.selectedProductType,
       product_size: this.state.selectedProductSize,
       product_class: this.state.selectedProductClass,
@@ -146,10 +161,9 @@ class AddProductTable extends React.Component {
       quantity: this.state.quantity
     });
 
-    console.log(res);
-
     if (res.status === 200) {
       this.addProductToTable(
+        res.data.product_id,
         this.state.selectedProductType,
         this.state.selectedProductSize,
         this.state.selectedProductClass,
@@ -162,7 +176,6 @@ class AddProductTable extends React.Component {
   };
 
   render() {
-    console.log(this.state.tableLoading);
     return (
       <div>
         <Card>
@@ -271,7 +284,7 @@ class AddProductTable extends React.Component {
         </Card>
         <Table
           dataSource={this.state.data}
-          columns={columns}
+          columns={this.columns}
           loading={this.state.tableLoading}
         />
       </div>

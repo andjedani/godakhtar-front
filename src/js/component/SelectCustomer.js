@@ -18,10 +18,9 @@ class SelectCustomer extends React.Component {
     let data = await createInquiry({
       customer_id: this.state.selectedCustomer.id
     });
-    console.log(data);
 
-    this.setState({ selectedInquiry: data.data.id, creatingInquiry: false });
-    this.props.selectInquiryId(data.data.id);
+    this.setState({ selectedInquiry: data.data, creatingInquiry: false });
+    this.props.selectInquiry(data.data);
   };
 
   componentWillMount = async () => {
@@ -37,7 +36,6 @@ class SelectCustomer extends React.Component {
         selectedInquiry: this.props.inquiry.id,
         selectedCustomer: this.props.inquiry.customer
       });
-      this.props.selectInquiryId(this.props.inquiry.id);
     }
   };
 
