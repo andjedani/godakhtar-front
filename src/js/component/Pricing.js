@@ -1,5 +1,6 @@
 import React from "react";
 import { Layout, Collapse, Icon } from "antd";
+import ReleaseDate from "./ReleaseDate";
 
 const Panel = Collapse.Panel;
 
@@ -19,7 +20,7 @@ class Pricing extends React.Component {
             <p>Hi</p>
           </Panel>
           <Panel header="زمان تحویل" key="2">
-            <p>Hi</p>
+            <ReleaseDate />
           </Panel>
         </Collapse>
       </Layout>

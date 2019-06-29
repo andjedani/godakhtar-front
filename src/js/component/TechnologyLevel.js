@@ -7,23 +7,20 @@ const radioStyle = {
   lineHeight: "30px"
 };
 
-class CustomerPriorities extends React.Component {
+class TechnologyLevel extends React.Component {
   render() {
     return (
       <Layout>
         <Card>
           <Radio.Group>
             <Radio style={radioStyle} value={0}>
-              کالای آماده تحویل
+              Low Tech
             </Radio>
             <Radio style={radioStyle} value={1}>
-              ساخت
+              Mid Tech
             </Radio>
             <Radio style={radioStyle} value={2}>
-              تامین
-            </Radio>
-            <Radio style={radioStyle} value={3}>
-              زمان تحویل کوتاه
+              High Tech
             </Radio>
           </Radio.Group>
         </Card>
@@ -32,4 +29,4 @@ class CustomerPriorities extends React.Component {
   }
 }
 
-export default CustomerPriorities;
+export default TechnologyLevel;

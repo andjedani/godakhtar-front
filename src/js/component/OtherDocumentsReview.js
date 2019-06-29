@@ -1,5 +1,8 @@
 import React from "react";
 import { Layout, Collapse, Icon } from "antd";
+import TechnologyLevel from "./TechnologyLevel";
+import OtherEngineeringNeeds from "./OtherEngineeringNeeds";
+import CheckTenderOfficePaper from "./CheckTenderOfficePaper";
 
 const Panel = Collapse.Panel;
 
@@ -19,16 +22,16 @@ class OtherDocumentsReview extends React.Component {
             <p>Hi</p>
           </Panel>
           <Panel header="سطح تکنولوژی تقاضا" key="2">
-            <p>Hi</p>
+            <TechnologyLevel />
           </Panel>
-          <Panel header="درک سایر الزامات مهندسی" key="3">
-            <p>Hi</p>
+          <Panel header="درج سایر الزامات مهندسی" key="3">
+            <OtherEngineeringNeeds />
           </Panel>
           <Panel
             header="بررسی مدارک فنی مناقصه و استخراج نکات تاثیر‌گذار مالی"
             key="4"
           >
-            <p>Hi</p>
+            <CheckTenderOfficePaper />
           </Panel>
         </Collapse>
       </Layout>

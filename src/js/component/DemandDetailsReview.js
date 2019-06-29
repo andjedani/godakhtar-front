@@ -2,6 +2,7 @@ import React from "react";
 import { Layout, Collapse, Icon } from "antd";
 import BusinessProperties from "./BusinessProperties";
 import CustomerPriorities from "./CustomerPriorities";
+import TenderOfficePaper from "./TenderOfficePaper";
 
 const Panel = Collapse.Panel;
 
@@ -29,7 +30,9 @@ class DemandDetailsReview extends React.Component {
           <Panel
             header="تهیه‌ی نامه‌ی درخواست ضمانت‌نامه شرکت در مناقصه در صورت نیاز"
             key="4"
-          />
+          >
+            <TenderOfficePaper />
+          </Panel>
         </Collapse>
       </Layout>
     );
