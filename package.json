@@ -8,6 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "antd": "^3.19.2",
     "axios": "^0.18.0",
+    "jalali-react-datepicker": "^0.0.1-alpha-01",
     "jquery": "^3.4.0",
     "random-hash": "^4.0.1",
     "react": "^16.8.6",
